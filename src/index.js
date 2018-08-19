@@ -1,1 +1,1 @@
-console.log('zad');
+console.log('zadok');

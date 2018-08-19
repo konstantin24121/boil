@@ -1,7 +1,9 @@
+const path = require("path");
+
 const config = {
   mode: "production",
   entry: {
-    main: ["./src/index.js"]
+    app: [path.join(global.src, "index.js")],
   },
 
   output: {

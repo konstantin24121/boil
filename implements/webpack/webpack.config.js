@@ -1,16 +1,21 @@
 const merge = require("webpack-merge");
 const path = require('path');
 
-const productionConfig = require('./prod.config');
 
 const context = process.cwd();
 
 global.src = path.resolve(context, "src");
+global.dist = path.resolve(context, "dist");
 global.isDevelopment = process.env.NODE_ENV === "development";
 global.isProduction = process.env.NODE_ENV === "production";
 
+
 const commonConfig = {
   context,
+
+  output: {
+    path: global.dist,
+  },
 
   resolve: {
     modules: [context, "node_modules"],
@@ -31,8 +36,11 @@ const commonConfig = {
   }
 };
 
+const productionConfig = require('./prod.config');
+const developeConfig = require("./dev.config");
+
 if (global.isDevelopment) {
-  // module.exports = merge.smart(commonConfig, developeConfig);
+  module.exports = merge.smart(commonConfig, developeConfig);
 } else if (global.isProduction) {
   module.exports = merge.smart(commonConfig, productionConfig);
 } else {
