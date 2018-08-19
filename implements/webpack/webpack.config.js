@@ -14,24 +14,21 @@ const commonConfig = {
   context,
 
   output: {
-    path: global.dist,
+    path: global.dist
   },
 
   resolve: {
     modules: [context, "node_modules"],
-    extensions: [".js", ".jsx"]
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
 
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.tsx?$/,
         include: [global.src],
-        loader: "babel-loader",
-        options: {
-          compact: false
-        }
-      }
+        loader: "awesome-typescript-loader",
+      },
     ]
   }
 };

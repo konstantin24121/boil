@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     app: [
       "webpack-hot-middleware/client",
-      path.join(global.src, "index.js")
+      path.join(global.src, "index.ts")
     ]
   },
 

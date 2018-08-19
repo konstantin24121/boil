@@ -3,7 +3,7 @@ const path = require("path");
 const config = {
   mode: "production",
   entry: {
-    app: [path.join(global.src, "index.js")],
+    app: [path.join(global.src, "index.ts")],
   },
 
   output: {
