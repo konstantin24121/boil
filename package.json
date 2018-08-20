@@ -32,6 +32,8 @@
   },
   "homepage": "https://github.com/konstantin24121/boil#readme",
   "devDependencies": {
+    "@types/react": "^16.4.11",
+    "@types/react-dom": "^16.0.7",
     "awesome-typescript-loader": "^5.2.0",
     "better-npm-run": "^0.1.1",
     "express": "^4.16.3",
@@ -43,5 +45,9 @@
     "webpack-dev-server": "^3.1.5",
     "webpack-hot-middleware": "^2.22.3",
     "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   }
 }

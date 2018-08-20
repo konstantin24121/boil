@@ -1,16 +1,16 @@
-const path = require("path");
+const path = require('path');
 
 const config = {
-  mode: "production",
+  mode: 'production',
   entry: {
-    app: [path.join(global.src, "index.ts")],
+    app: [global.entryPoint],
   },
 
   output: {
-    publicPath: "/",
-    filename: "[name].[chunkhash].js",
-    chunkFilename: "[name].[chunkhash].js"
-  }
+    publicPath: '/',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js',
+  },
 };
 
 module.exports = config;
