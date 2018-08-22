@@ -3,7 +3,7 @@ const path = require('path');
 const config = {
   mode: 'production',
   entry: {
-    app: [global.entryPoint],
+    app: [global.boil.entryPoint],
   },
 
   output: {

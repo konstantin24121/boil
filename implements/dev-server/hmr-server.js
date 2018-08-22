@@ -7,17 +7,14 @@ const hotMiddleware = require('webpack-hot-middleware');
 const PrettyError = require('pretty-error');
 const pe = new PrettyError();
 
-const webpackConfig = require('../webpack/webpack.config.js');
+const webpackConfig = require('../universal-webpack/webpack.config.client');
 
 const server = express();
 const compiler = webpack(webpackConfig);
 pe.start();
 
 const context = process.cwd();
-const host = process.env.HOST || 'localhost';
-const port = +process.env.PORT || 3000;
-const portDevServer = port + 1;
-const serverHost = `http://${host}:${portDevServer}`;
+
 server.use(
   devMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
@@ -29,26 +26,22 @@ server.use(
     },
     headers: {
       'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Origin': serverHost,
+      'Access-Control-Allow-Origin': `http://localhost:${global.boil.port}`,
     },
   }),
 );
 
 server.use(hotMiddleware(compiler));
 
-server.use('*', (req, res, next) => {
-  res.sendFile(path.join(context, '/src/index.html'));
-});
-
-server.listen(portDevServer, host, function(err) {
+server.listen(global.boil.port + 1, function(err) {
   if (err) {
     return console.error(err);
   }
-  console.info(`\x1b[32m
+  console.info(`
 ======================================================================
-||                                                                  ||
-||  \x1b[0mDev server is running on \x1b[36m${serverHost}\x1b[0m. Happy shitting\x1b[32m  ||
-||                                                                  ||
+💻 HMR server is running on \x1b[36m${
+    global.boil.hmrServer
+  }\x1b[0m. Happy shitting
 ======================================================================
     `);
 });

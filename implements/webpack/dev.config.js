@@ -1,20 +1,20 @@
 const webpack = require('webpack');
-const path = require('path');
-
-const host = process.env.HOST || 'localhost';
-const port = +process.env.PORT || 3000;
 
 module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
   entry: {
-    app: ['webpack-hot-middleware/client', global.entryPoint],
+    app: [
+      `webpack-hot-middleware/client?path=${
+        global.boil.hmrServer
+      }__webpack_hmr`,
+      global.boil.entryPoint,
+    ],
   },
 
   output: {
-    path: '/',
     filename: '[name].js',
-    publicPath: `http://${host}:${port}/`,
+    publicPath: global.boil.hmrServer,
   },
 
   plugins: [

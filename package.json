@@ -4,20 +4,36 @@
   "description": "Fucking awesome superb boilerplate",
   "main": "index.js",
   "scripts": {
-    "build": "better-npm-run build",
-    "dev": "better-npm-run dev"
+    "build": "better-npm-run buildClient && better-npm-run buildServer",
+    "dev": "better-npm-run dev",
+    "webpack-hmr-server": "node ./implements/dev-server/hmr-server.js",
+    "webpack-ssr-server": "better-npm-run start-dev-ssr",
+    "dev-server": "nodemon ./implements/dev-server/ssr-server.js --watch ./dist"
   },
   "betterScripts": {
     "dev": {
-      "command": "node ./implements/dev-server/dev-server.js",
+      "command": "concurrent --kill-others \"npm run webpack-hmr-server\" \"npm run webpack-ssr-server\" \"npm run dev-server\"",
       "env": {
         "NODE_ENV": "development"
       }
     },
-    "build": {
-      "command": "webpack --colors --progress --display-error-details --config implements/webpack/webpack.config.js",
+    "start-dev-ssr": {
+      "command": "webpack --colors --progress --display-error-details --w --config implements/universal-webpack/webpack.config.server.js",
+      "env": {
+        "IS_SERVER_BUNDLE": true
+      }
+    },
+    "buildClient": {
+      "command": "webpack --colors --progress --display-error-details --config implements/universal-webpack/webpack.config.client.js",
       "env": {
         "NODE_ENV": "production"
+      }
+    },
+    "buildServer": {
+      "command": "webpack --colors --progress --display-error-details --config implements/universal-webpack/webpack.config.server.js",
+      "env": {
+        "NODE_ENV": "production",
+        "IS_SERVER_BUNDLE": true
       }
     }
   },
@@ -32,13 +48,18 @@
   },
   "homepage": "https://github.com/konstantin24121/boil#readme",
   "devDependencies": {
+    "@types/express": "^4.16.0",
     "@types/react": "^16.4.11",
     "@types/react-dom": "^16.0.7",
     "awesome-typescript-loader": "^5.2.0",
+    "babel-runtime": "^6.26.0",
     "better-npm-run": "^0.1.1",
+    "concurrently": "^3.6.1",
     "express": "^4.16.3",
+    "nodemon": "^1.18.3",
     "pretty-error": "^2.1.1",
     "typescript": "^3.0.1",
+    "universal-webpack": "^0.6.6",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-middleware": "^3.1.3",

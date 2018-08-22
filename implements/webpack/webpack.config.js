@@ -1,19 +1,15 @@
+require('../config');
+
 const merge = require('webpack-merge');
+const webpack = require('webpack');
 const path = require('path');
-
 const context = process.cwd();
-
-global.src = path.resolve(context, 'src');
-global.dist = path.resolve(context, 'dist');
-global.isDevelopment = process.env.NODE_ENV === 'development';
-global.isProduction = process.env.NODE_ENV === 'production';
-global.entryPoint = path.join(global.src, 'index.tsx');
 
 const commonConfig = {
   context,
 
   output: {
-    path: global.dist,
+    path: global.boil.dist,
   },
 
   resolve: {
@@ -25,21 +21,29 @@ const commonConfig = {
     rules: [
       {
         test: /\.tsx?$/,
-        include: [global.src],
+        include: [global.boil.src],
         loader: 'awesome-typescript-loader',
       },
     ],
   },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      __ENV__: JSON.stringify(process.env.NODE_ENV),
+      __IS_SERVER_BUNDLE__: JSON.stringify(process.env.IS_SERVER_BUNDLE),
+      __DEVELOPMENT__: JSON.stringify(global.boil.isDevelopment),
+      __APP_ID__: JSON.stringify(global.boil.appId),
+    }),
+  ],
 };
 
 const productionConfig = require('./prod.config');
 const developeConfig = require('./dev.config');
 
-if (global.isDevelopment) {
+if (global.boil.isDevelopment) {
   module.exports = merge.smart(commonConfig, developeConfig);
-} else if (global.isProduction) {
+} else if (global.boil.isProduction) {
   module.exports = merge.smart(commonConfig, productionConfig);
 } else {
   module.exports = commonConfig;
-  // throw Error(`\x1b[31m✖ ==> Our assembly have no ENV\x1b[0m like  ${process.env.NODE_ENV}`);
 }
