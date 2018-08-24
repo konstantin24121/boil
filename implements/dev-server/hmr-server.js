@@ -24,6 +24,7 @@ server.use(
       timings: true,
       chunks: false,
     },
+    noInfo: true,
     headers: {
       'Access-Control-Allow-Credentials': true,
       'Access-Control-Allow-Origin': `http://localhost:${global.boil.port}`,

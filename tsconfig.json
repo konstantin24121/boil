@@ -3,15 +3,17 @@
     "module": "commonjs",
     "jsx": "react",
     "target": "es5",
-    "lib": [
-      "dom",
-      "es6",
-      "es2017"
-    ],
+    "lib": ["dom", "es6", "es2017"],
     "outDir": "dist",
     "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "@atoms/*": ["./common/components/atoms/*"],
+      "@components/*": ["./common/components/*"],
+      "@common/*": ["./common/*"]
+    }
   },
   "awesomeTypescriptLoaderOptions": {
-    "useCache": true,
+    "useCache": true
   }
 }

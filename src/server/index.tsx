@@ -3,10 +3,11 @@ import * as http from 'http';
 import * as PrettyError from 'pretty-error';
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
+import { extractCritical } from 'emotion-server';
 import Html from './components/Html';
+import { App } from '@common/App';
 
 const pe = new PrettyError();
-const publicFolder = './build/public';
 
 pe.start();
 // The server code must export a function
@@ -20,10 +21,18 @@ export default function(parameters) {
   server.get('*', (req, res) => {
     const assets = parameters.chunks();
 
-    const content = renderToString(<div>zad</div>);
+    const content = renderToString(<App />);
+    const emotionsStyles = extractCritical(content);
 
     res.send(`<!doctype html>\n
-      ${renderToString(<Html assets={assets} content={content} />)}`);
+      ${renderToString(
+        <Html
+          assets={assets}
+          content={content}
+          css={emotionsStyles.css}
+          emotionIds={emotionsStyles.ids}
+        />,
+      )}`);
   });
 
   http.createServer(server).listen(global.boil.port, (err) => {

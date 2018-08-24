@@ -3,6 +3,7 @@ const webpack = require('webpack');
 module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
+  stats: 'errors-only',
   entry: {
     app: [
       `webpack-hot-middleware/client?path=${

@@ -5,6 +5,8 @@ const webpack = require('webpack');
 const path = require('path');
 const context = process.cwd();
 
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+
 const commonConfig = {
   context,
 
@@ -15,6 +17,7 @@ const commonConfig = {
   resolve: {
     modules: [context, 'node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    plugins: [new TsConfigPathsPlugin()],
   },
 
   module: {

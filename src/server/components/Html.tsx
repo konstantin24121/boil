@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as serialize from 'serialize-javascript';
 
 type TChunks = {
   javascript: StringObj;
@@ -8,16 +9,27 @@ type TChunks = {
 interface IHtmlProps {
   assets: TChunks;
   content: string;
+  css: string;
+  emotionIds: string[];
 }
 
 class Html extends React.Component<IHtmlProps> {
   public render() {
-    const { content } = this.props;
+    const { content, css, emotionIds } = this.props;
     return (
       <html lang="ru">
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </head>
+        <style dangerouslySetInnerHTML={{ __html: css }} />
+        <script
+          id="emotionCritical"
+          dangerouslySetInnerHTML={{
+            __html: `window.__EMOTION_CRITICAL_IDS__ = ${serialize(
+              emotionIds,
+            )}`,
+          }}
+        />
         <body>
           <div
             id={global.boil.appId}
