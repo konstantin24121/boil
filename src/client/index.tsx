@@ -3,7 +3,10 @@ import * as ReactDOM from 'react-dom';
 
 import './utils/hydrateEmotionsIds';
 
-import { App } from '@common/App';
+import { Root } from './Root';
+import { configureStore } from '@common/reduck/store';
 
+const store = configureStore();
 const dist = document.getElementById(__APP_ID__);
-ReactDOM.hydrate(<App />, dist);
+
+ReactDOM.hydrate(<Root store={store} />, dist);

@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
+      "@modules/*": ["./common/reduck/modules/*"],
       "@atoms/*": ["./common/components/atoms/*"],
       "@components/*": ["./common/components/*"],
       "@common/*": ["./common/*"]

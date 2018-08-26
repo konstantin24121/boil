@@ -21,7 +21,7 @@ export default function(parameters) {
   server.get('*', (req, res) => {
     const assets = parameters.chunks();
 
-    const content = renderToString(<App />);
+    const content = renderToString(<div />);
     const emotionsStyles = extractCritical(content);
 
     res.send(`<!doctype html>\n

@@ -58,6 +58,7 @@
     "better-npm-run": "^0.1.1",
     "concurrently": "^3.6.1",
     "nodemon": "^1.18.3",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1",
     "universal-webpack": "^0.6.6",
@@ -69,6 +70,9 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@martin_hotell/rex-tils": "^0.8.0",
+    "@types/react-redux": "^6.0.6",
+    "@types/redux": "^3.6.0",
     "emotion": "^9.2.6",
     "emotion-server": "^9.2.6",
     "emotion-theming": "^9.2.6",
@@ -77,6 +81,9 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-emotion": "^9.2.6",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
     "serialize-javascript": "^1.5.0"
   }
 }

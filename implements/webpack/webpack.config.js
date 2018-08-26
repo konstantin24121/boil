@@ -5,7 +5,9 @@ const webpack = require('webpack');
 const path = require('path');
 const context = process.cwd();
 
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+// Do not work
+// const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
+// const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 const commonConfig = {
   context,
@@ -15,9 +17,22 @@ const commonConfig = {
   },
 
   resolve: {
-    modules: [context, 'node_modules'],
+    modules: [global.boil.src, 'node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    plugins: [new TsConfigPathsPlugin()],
+    // plugins: [
+    //   // new TsConfigPathsPlugin({
+    //   //   configFileName: path.join(context, 'tsconfig.json'),
+    //   // }),
+    //   // new TsconfigPathsPlugin({
+    //   //   configFile: path.join(context, 'tsconfig.json'),
+    //   // }),
+    // ],
+    alias: {
+      '@atoms': path.resolve(global.boil.src, 'common/components/atoms'),
+      '@components': path.resolve(global.boil.src, 'common/components'),
+      '@modules': path.resolve(global.boil.src, 'common/reduck/modules'),
+      '@common': path.resolve(global.boil.src, 'common'),
+    },
   },
 
   module: {
