@@ -4,12 +4,14 @@
   "description": "Fucking awesome superb boilerplate",
   "main": "index.js",
   "scripts": {
+    "prebuild": "rimraf ./dist",
     "build": "better-npm-run buildClient && better-npm-run buildServer",
     "dev": "better-npm-run dev",
-    "webpack-hmr-server": "node ./implements/dev-server/hmr-server.js",
+    "webpack-hmr-server": "node ./implements/servers/hmr-server.js",
     "webpack-ssr-server": "better-npm-run start-dev-ssr",
-    "dev-server": "nodemon ./implements/dev-server/ssr-server.js --watch ./dist",
-    "lint": "tslint \"src/app/**/*.ts\" \"src/app/**/*.tsx\" --project ./tsconfig.json"
+    "dev-server": "nodemon ./implements/servers/ssr-server.js --watch ./dist",
+    "lint": "tslint \"src/app/**/*.ts\" \"src/app/**/*.tsx\" --project ./tsconfig.json",
+    "server": "nodemon ./implements/servers/ssr-server.js"
   },
   "betterScripts": {
     "dev": {
@@ -58,7 +60,7 @@
     "better-npm-run": "^0.1.1",
     "concurrently": "^3.6.1",
     "nodemon": "^1.18.3",
-    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "rimraf": "^2.6.2",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1",
     "universal-webpack": "^0.6.6",

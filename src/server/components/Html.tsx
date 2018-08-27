@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as serialize from 'serialize-javascript';
+import { Store } from 'redux';
 
 type TChunks = {
   javascript: StringObj;
@@ -11,11 +12,12 @@ interface IHtmlProps {
   content: string;
   css: string;
   emotionIds: string[];
+  store: Store<IRootState>;
 }
 
 class Html extends React.Component<IHtmlProps> {
   public render() {
-    const { content, css, emotionIds } = this.props;
+    const { content, css, emotionIds, store } = this.props;
     return (
       <html lang="ru">
         <head>
@@ -27,6 +29,14 @@ class Html extends React.Component<IHtmlProps> {
           dangerouslySetInnerHTML={{
             __html: `window.__EMOTION_CRITICAL_IDS__ = ${serialize(
               emotionIds,
+            )}`,
+          }}
+        />
+        <script
+          id="serverState"
+          dangerouslySetInnerHTML={{
+            __html: `window.__REDUX_INITIAL_STATE__ = ${serialize(
+              store.getState(),
             )}`,
           }}
         />

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import { ThemeProvider } from 'emotion-theming';
 import { theme } from './theme';
-import { StyledComponent } from '@atoms/StyledComponent';
-import { UserModule } from './reduck/modules/user';
+import { UserModule } from 'modules/user';
+import { StyledComponent } from 'atoms/StyledComponent';
 
 export namespace IApp {
   export interface IOwnProps {}

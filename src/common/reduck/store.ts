@@ -1,9 +1,14 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, Store, Action } from 'redux';
 
-const configureStore = (initialState?: Partial<IRootState>) => {
+const configureStore = (
+  initialState?: Partial<IRootState>,
+): Store<IRootState> => {
   const { rootReducer } = require('./rootReduser');
 
-  const store = createStore(rootReducer, initialState);
+  const store = createStore<IRootState, Action<any>, {}, {}>(
+    rootReducer,
+    initialState,
+  );
   return store;
 };
 

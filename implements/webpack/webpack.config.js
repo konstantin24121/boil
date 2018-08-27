@@ -5,10 +5,6 @@ const webpack = require('webpack');
 const path = require('path');
 const context = process.cwd();
 
-// Do not work
-// const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin');
-// const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
-
 const commonConfig = {
   context,
 
@@ -19,19 +15,10 @@ const commonConfig = {
   resolve: {
     modules: [global.boil.src, 'node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    // plugins: [
-    //   // new TsConfigPathsPlugin({
-    //   //   configFileName: path.join(context, 'tsconfig.json'),
-    //   // }),
-    //   // new TsconfigPathsPlugin({
-    //   //   configFile: path.join(context, 'tsconfig.json'),
-    //   // }),
-    // ],
     alias: {
-      '@atoms': path.resolve(global.boil.src, 'common/components/atoms'),
-      '@components': path.resolve(global.boil.src, 'common/components'),
-      '@modules': path.resolve(global.boil.src, 'common/reduck/modules'),
-      '@common': path.resolve(global.boil.src, 'common'),
+      common: path.join(global.boil.src, 'common'),
+      atoms: path.join(global.boil.src, 'common/components/atoms'),
+      modules: path.join(global.boil.src, 'common/reduck/modules'),
     },
   },
 
@@ -54,7 +41,6 @@ const commonConfig = {
     }),
   ],
 };
-
 const productionConfig = require('./prod.config');
 const developeConfig = require('./dev.config');
 

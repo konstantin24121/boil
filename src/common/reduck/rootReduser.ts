@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 
 import { userReducer, IUserState } from './modules/user/reducer';
 
@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-const rootReducer = combineReducers<IRootState>({
+const rootReducer: Reducer<IRootState> = combineReducers<IRootState>({
   user: userReducer,
 });
 

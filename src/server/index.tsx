@@ -5,7 +5,8 @@ import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { extractCritical } from 'emotion-server';
 import Html from './components/Html';
-import { App } from '@common/App';
+import { configureStore } from 'common/reduck/store';
+import { Root } from './Root';
 
 const pe = new PrettyError();
 
@@ -21,14 +22,18 @@ export default function(parameters) {
   server.get('*', (req, res) => {
     const assets = parameters.chunks();
 
-    const content = renderToString(<div />);
+    const store = configureStore({ user: { count: 50 } });
+    const content = renderToString(<Root store={store} />);
     const emotionsStyles = extractCritical(content);
 
     res.send(`<!doctype html>\n
       ${renderToString(
         <Html
-          assets={assets}
-          content={content}
+          {...{
+            store,
+            assets,
+            content,
+          }}
           css={emotionsStyles.css}
           emotionIds={emotionsStyles.ids}
         />,

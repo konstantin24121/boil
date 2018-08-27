@@ -1,5 +1,5 @@
-import { UserModule } from '@modules/user';
-import * as actions from '@modules/user/actions';
+import { UserModule } from './';
+import * as actions from './actions';
 
 const initialState: UserModule.IState = {
   count: 0,
