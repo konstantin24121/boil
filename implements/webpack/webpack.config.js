@@ -4,6 +4,7 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const path = require('path');
 const context = process.cwd();
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const commonConfig = {
   context,
@@ -26,9 +27,14 @@ const commonConfig = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.(j|t)sx?$/,
         include: [global.boil.src],
-        loader: 'awesome-typescript-loader',
+        use: [{
+          loader: "babel-loader",
+          options: {
+            cacheDirectory: true,
+          }
+        }]
       },
       {
         test: /\.svg?$/,
@@ -61,6 +67,7 @@ const commonConfig = {
       __DEVELOPMENT__: JSON.stringify(global.boil.isDevelopment),
       __APP_ID__: JSON.stringify(global.boil.appId),
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
 };
 const productionConfig = require('./prod.config');

@@ -4,7 +4,7 @@ const merge = require('webpack-merge');
 
 const commonConfig = {
   mode: 'development',
-  devtool: 'eval-source-map',
+  devtool: 'eval',
   stats: 'errors-only',
 };
 

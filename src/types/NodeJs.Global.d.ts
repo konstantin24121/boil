@@ -1,5 +1,6 @@
 interface Boil {
   port: number;
+  host: string;
   src: string;
   dist: string;
   isDevelopment: boolean;

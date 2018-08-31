@@ -1,29 +1,28 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+
 import { ThemeProvider } from 'emotion-theming';
 import { theme } from './theme';
-import { UserModule } from 'modules/user';
+import { UserModuleActions } from 'modules/user';
 import { StyledComponent } from 'atoms/StyledComponent';
 import { Icon } from 'atoms/Icon';
 import { EIconNames } from 'icons/IconsManifest';
 
-export namespace IApp {
-  export interface IOwnProps {}
-  export interface IStateProps {
-    count: number;
-  }
-  export interface IDispatchersProps {
-    increment: () => any;
-    decrement: (count?: number) => any;
-  }
-  export interface IProps
-    extends IApp.IOwnProps,
-      IApp.IStateProps,
-      IDispatchersProps {}
+export interface IAppOwnProps {}
+export interface IAppStateProps {
+  count: number;
 }
+export interface IAppDispatchersProps {
+  increment: () => any;
+  decrement: (count?: number) => any;
+}
+export interface IAppProps
+  extends IAppOwnProps,
+    IAppStateProps,
+  IAppDispatchersProps {}
 
-class AppPure extends React.Component<IApp.IProps> {
+class AppPure extends React.Component<IAppProps> {
   public render() {
     return <ThemeProvider {...{ theme }}>
         <>
@@ -43,18 +42,18 @@ class AppPure extends React.Component<IApp.IProps> {
 }
 
 const App = connect<
-  IApp.IStateProps,
-  IApp.IDispatchersProps,
-  IApp.IOwnProps,
+  IAppStateProps,
+  IAppDispatchersProps,
+  IAppOwnProps,
   IRootState
 >(
   (state) => ({
     count: state.user.count,
   }),
   (dispatch) => ({
-    increment: () => dispatch(UserModule.Actions.increment()),
+    increment: () => dispatch(UserModuleActions.increment()),
     decrement: (count?: number) =>
-      dispatch(UserModule.Actions.decrement(count)),
+      dispatch(UserModuleActions.decrement(count)),
   }),
 )(AppPure);
 

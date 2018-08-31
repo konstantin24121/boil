@@ -27,7 +27,7 @@ server.use(
     noInfo: true,
     headers: {
       'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Origin': `http://localhost:${global.boil.port}`,
+      'Access-Control-Allow-Origin': `http://${global.boil.host}:${global.boil.port}`,
     },
   }),
 );

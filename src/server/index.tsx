@@ -40,12 +40,14 @@ export default function(parameters) {
       )}`);
   });
 
-  http.createServer(server).listen(global.boil.port, (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  http
+    .createServer(server)
+    .listen(global.boil.port, global.boil.host, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    console.info(`Ssr server started at port ${global.boil.port}.`);
-  });
+      console.info(`Ssr server started at http://${global.boil.host}:${global.boil.port}.`);
+    });
 }
