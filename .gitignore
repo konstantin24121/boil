@@ -32,3 +32,6 @@ typings/
 
 # Build directory
 dist
+
+# Generated files
+src/static/icons/*.ts

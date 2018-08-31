@@ -19,6 +19,7 @@ const commonConfig = {
       common: path.join(global.boil.src, 'common'),
       atoms: path.join(global.boil.src, 'common/components/atoms'),
       modules: path.join(global.boil.src, 'common/reduck/modules'),
+      icons: path.join(global.boil.src, 'static/icons'),
     },
   },
 
@@ -28,6 +29,27 @@ const commonConfig = {
         test: /\.tsx?$/,
         include: [global.boil.src],
         loader: 'awesome-typescript-loader',
+      },
+      {
+        test: /\.svg?$/,
+        use: [
+          {
+            loader: 'react-svg-loader',
+            query: {
+              svgo: {
+                pretty: true,
+                plugins: [
+                  {
+                    removeStyleElement: true,
+                  },
+                  {
+                    removeTitle: true,
+                  },
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
   },
