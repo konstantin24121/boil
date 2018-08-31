@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const context = process.cwd();
 const path = require('path');
 
@@ -6,7 +8,7 @@ let config = {
   src: path.resolve(context, 'src'),
   dist: path.resolve(context, 'dist'),
   isDevelopment: process.env.NODE_ENV === 'development',
-  isProduction: process.env.NODE_ENV === 'production',
+  isProduction: process.env.NODE_ENV !== 'development',
   appId: 'app',
   get hmrServer() {
     return `http://localhost:${this.port + 1}/`;

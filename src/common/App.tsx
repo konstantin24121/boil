@@ -28,7 +28,7 @@ class AppPure extends React.Component<IApp.IProps> {
     return <ThemeProvider {...{ theme }}>
         <>
           <StyledComponent underlined onClick={this.handleClick}>
-            Fuck that shit {this.props.count} times
+            Fuck that shit {this.props.count} timess
             <Icon name={EIconNames.infinity} />
 
           </StyledComponent>
