@@ -10,4 +10,5 @@ declare const __APP_ID__: string;
 declare interface Window {
   __EMOTION_CRITICAL_IDS__: string[];
   __REDUX_INITIAL_STATE__: Partial<IRootState>;
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
 }

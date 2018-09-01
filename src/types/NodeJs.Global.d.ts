@@ -15,3 +15,7 @@ declare namespace NodeJS {
     boil: Boil;
   }
 }
+
+declare interface NodeModule {
+  hot: any;
+}

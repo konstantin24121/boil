@@ -37,7 +37,7 @@ class AppPure extends React.Component<IAppProps> {
 
   private handleClick = () => {
     this.props.increment();
-    this.props.decrement(1);
+    this.props.decrement();
   };
 }
 

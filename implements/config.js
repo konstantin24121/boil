@@ -3,9 +3,23 @@ require('dotenv').config();
 const context = process.cwd();
 const path = require('path');
 
+const os = require('os');
+const ifaces = os.networkInterfaces();
+let host = '0.0.0.0';
+
+Object.keys(ifaces).forEach(function(ifname) {
+  ifaces[ifname].forEach(function(iface) {
+    if ('IPv4' !== iface.family || iface.internal !== false) {
+      return;
+    }
+
+    host = iface.address;
+  });
+});
+
 let config = {
   port: +process.env.PORT || 3000,
-  host: process.env.HOST || '0.0.0.0',
+  host: process.env.HOST || host,
   src: path.resolve(context, 'src'),
   dist: path.resolve(context, 'dist'),
   isDevelopment: process.env.NODE_ENV === 'development',
