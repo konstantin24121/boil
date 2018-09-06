@@ -3,6 +3,13 @@
   "rules": {
     "max-line-length": {
       "options": [100]
-    }
+    },
+    "ordered-imports": false,
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": false,
+    "object-literal-sort-keys": false,
+    "interface-over-type-literal": false,
+    "no-empty-interface": false,
+    "no-console": false
   }
 }

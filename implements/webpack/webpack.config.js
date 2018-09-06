@@ -29,12 +29,14 @@ const commonConfig = {
       {
         test: /\.(j|t)sx?$/,
         include: [global.boil.src],
-        use: [{
-          loader: "babel-loader",
-          options: {
-            cacheDirectory: true,
-          }
-        }]
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+            },
+          },
+        ],
       },
       {
         test: /\.svg?$/,

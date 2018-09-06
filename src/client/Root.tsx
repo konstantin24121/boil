@@ -19,4 +19,4 @@ class PureRoot extends React.Component<IRootProps> {
 }
 
 const Root = hot(module)(PureRoot);
-export {Root};
+export { Root };

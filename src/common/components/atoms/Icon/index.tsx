@@ -22,13 +22,7 @@ export class Icon extends React.Component<IIconProps, any> {
     const { name, width, height, color, className, rotate } = this.props;
     const SvgIcon = icons[name].default;
     return (
-      <IconStyler
-        width={width}
-        height={height}
-        color={color}
-        className={className}
-        rotate={rotate}
-      >
+      <IconStyler width={width} height={height} color={color} className={className} rotate={rotate}>
         <SvgIcon width="100%" height="100%" />
       </IconStyler>
     );

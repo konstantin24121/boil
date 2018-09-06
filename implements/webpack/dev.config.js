@@ -23,9 +23,7 @@ const clearConfig = {
 const hmrConfig = {
   entry: {
     app: [
-      `webpack-hot-middleware/client?path=${
-      global.boil.hmrServer
-      }__webpack_hmr`,
+      `webpack-hot-middleware/client?path=${global.boil.hmrServer}__webpack_hmr`,
       global.boil.entryPoint,
     ],
   },
@@ -35,16 +33,11 @@ const hmrConfig = {
     publicPath: global.boil.hmrServer,
   },
 
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-  ],
-}
+  plugins: [new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin()],
+};
 
-if (/^dev/.test(target)){
+if (/^dev/.test(target)) {
   module.exports = merge.smart(commonConfig, hmrConfig);
 } else {
   module.exports = merge.smart(commonConfig, clearConfig);
 }
-
-

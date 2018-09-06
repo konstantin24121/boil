@@ -40,9 +40,7 @@ server.listen(global.boil.port + 1, function(err) {
   }
   console.info(`
 ======================================================================
-💻 HMR server is running on \x1b[36m${
-    global.boil.hmrServer
-  }\x1b[0m. Happy shitting
+💻 HMR server is running on \x1b[36m${global.boil.hmrServer}\x1b[0m. Happy shitting
 ======================================================================
     `);
 });

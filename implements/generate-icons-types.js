@@ -2,11 +2,10 @@ require('./config');
 
 const path = require('path');
 const fs = require('fs');
-const manifestFileName = path.join(
-  global.boil.src,
-  'static/icons/IconsManifest.ts',
-);
-if (fs.existsSync(manifestFileName)) fs.unlinkSync(manifestFileName);
+const manifestFileName = path.join(global.boil.src, 'static/icons/IconsManifest.ts');
+if (fs.existsSync(manifestFileName)) {
+  fs.unlinkSync(manifestFileName);
+}
 
 function camelize(str) {
   const regexp = new RegExp(/([a-zA-Z]{1}[a-z]*)/g);

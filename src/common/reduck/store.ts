@@ -6,11 +6,7 @@ const middleware = [];
 let enhancer;
 
 // Подключим REDUX_DEVTOOLS
-if (
-  __DEVELOPMENT__ &&
-  typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-) {
+if (__DEVELOPMENT__ && typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       name: config.name,
@@ -21,10 +17,7 @@ if (
   enhancer = applyMiddleware(...middleware);
 }
 
-
-const configureStore = (
-  initialState?: Partial<IRootState>,
-): Store<IRootState> => {
+const configureStore = (initialState?: Partial<IRootState>): Store<IRootState> => {
   const { rootReducer } = require('./rootReduser');
 
   const store = createStore<IRootState, Action<any>, {}, {}>(rootReducer, initialState, enhancer);

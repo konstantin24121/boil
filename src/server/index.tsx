@@ -7,6 +7,7 @@ import { extractCritical } from 'emotion-server';
 import Html from './components/Html';
 import { configureStore } from 'common/reduck/store';
 import { Root } from './Root';
+import Helmet from 'react-helmet';
 
 const pe = new PrettyError();
 
@@ -25,12 +26,14 @@ export default function(parameters) {
     const store = configureStore({ user: { count: 50 } });
     const content = renderToString(<Root store={store} />);
     const emotionsStyles = extractCritical(content);
+    const helmet = Helmet.renderStatic();
 
     res.send(`<!doctype html>\n
       ${renderToString(
         <Html
           {...{
             store,
+            helmet,
             assets,
             content,
           }}
@@ -40,14 +43,12 @@ export default function(parameters) {
       )}`);
   });
 
-  http
-    .createServer(server)
-    .listen(global.boil.port, global.boil.host, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+  http.createServer(server).listen(global.boil.port, global.boil.host, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
 
-      console.info(`Ssr server started at http://${global.boil.host}:${global.boil.port}.`);
-    });
+    console.info(`Ssr server started at http://${global.boil.host}:${global.boil.port}.`);
+  });
 }

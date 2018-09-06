@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-
 import { ThemeProvider } from 'emotion-theming';
 import { theme } from './theme';
 import { UserModuleActions } from 'modules/user';
 import { StyledComponent } from 'atoms/StyledComponent';
 import { Icon } from 'atoms/Icon';
 import { EIconNames } from 'icons/IconsManifest';
+import { Helmet } from 'react-helmet';
 
 export interface IAppOwnProps {}
 export interface IAppStateProps {
@@ -17,22 +17,23 @@ export interface IAppDispatchersProps {
   increment: () => any;
   decrement: (count?: number) => any;
 }
-export interface IAppProps
-  extends IAppOwnProps,
-    IAppStateProps,
-  IAppDispatchersProps {}
+export interface IAppProps extends IAppOwnProps, IAppStateProps, IAppDispatchersProps {}
 
 class AppPure extends React.Component<IAppProps> {
   public render() {
-    return <ThemeProvider {...{ theme }}>
+    return (
+      <ThemeProvider {...{ theme }}>
         <>
+          <Helmet>
+            <title>Fuck that Title</title>
+          </Helmet>
           <StyledComponent underlined onClick={this.handleClick}>
             Fuck that shit {this.props.count} timess
             <Icon name={EIconNames.infinity} />
-
           </StyledComponent>
         </>
-      </ThemeProvider>;
+      </ThemeProvider>
+    );
   }
 
   private handleClick = () => {
@@ -41,19 +42,13 @@ class AppPure extends React.Component<IAppProps> {
   };
 }
 
-const App = connect<
-  IAppStateProps,
-  IAppDispatchersProps,
-  IAppOwnProps,
-  IRootState
->(
+const App = connect<IAppStateProps, IAppDispatchersProps, IAppOwnProps, IRootState>(
   (state) => ({
     count: state.user.count,
   }),
   (dispatch) => ({
     increment: () => dispatch(UserModuleActions.increment()),
-    decrement: (count?: number) =>
-      dispatch(UserModuleActions.decrement(count)),
+    decrement: (count?: number) => dispatch(UserModuleActions.decrement(count)),
   }),
 )(AppPure);
 
