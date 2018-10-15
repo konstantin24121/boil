@@ -5,3 +5,7 @@ declare interface StringObj {
 declare interface StringObjProtected {
   readonly [key: string]: string;
 }
+
+declare interface ObjProtected<T> {
+  readonly [key: string]: T;
+}

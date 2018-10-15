@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose, Store, Action } from 'redux';
-import config from 'common/config';
+import { config } from 'common/config';
 
 const middleware = [];
 

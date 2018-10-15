@@ -23,8 +23,9 @@ export default function(parameters) {
   server.get('*', (req, res) => {
     const assets = parameters.chunks();
 
+    const context = {};
     const store = configureStore({ user: { count: 50 } });
-    const content = renderToString(<Root store={store} />);
+    const content = renderToString(<Root {...{ store, context, url: req.url }} />);
     const emotionsStyles = extractCritical(content);
     const helmet = Helmet.renderStatic();
 

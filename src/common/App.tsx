@@ -1,55 +1,13 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-
 import { ThemeProvider } from 'emotion-theming';
 import { theme } from './theme';
-import { UserModuleActions } from 'modules/user';
-import { StyledComponent } from 'atoms/StyledComponent';
-import { Icon } from 'atoms/Icon';
-import { EIconNames } from 'icons/IconsManifest';
-import { Helmet } from 'react-helmet';
+import { renderRoutes, RouteConfigComponentProps } from 'react-router-config';
 
-export interface IAppOwnProps {}
-export interface IAppStateProps {
-  count: number;
-}
-export interface IAppDispatchersProps {
-  increment: () => any;
-  decrement: (count?: number) => any;
-}
-export interface IAppProps extends IAppOwnProps, IAppStateProps, IAppDispatchersProps {}
+interface IAppProps extends RouteConfigComponentProps {}
 
-class AppPure extends React.Component<IAppProps> {
+export class App extends React.Component<IAppProps> {
   public render() {
-    return (
-      <ThemeProvider {...{ theme }}>
-        <>
-          <Helmet>
-            <title>Fuck that Title</title>
-          </Helmet>
-          <StyledComponent underlined onClick={this.handleClick}>
-            Fuck that shit {this.props.count} timess
-            <Icon name={EIconNames.infinity} />
-          </StyledComponent>
-        </>
-      </ThemeProvider>
-    );
+    const { route } = this.props;
+    return <ThemeProvider {...{ theme }}>{renderRoutes(route.routes)}</ThemeProvider>;
   }
-
-  private handleClick = () => {
-    this.props.increment();
-    this.props.decrement();
-  };
 }
-
-const App = connect<IAppStateProps, IAppDispatchersProps, IAppOwnProps, IRootState>(
-  (state) => ({
-    count: state.user.count,
-  }),
-  (dispatch) => ({
-    increment: () => dispatch(UserModuleActions.increment()),
-    decrement: (count?: number) => dispatch(UserModuleActions.decrement(count)),
-  }),
-)(AppPure);
-
-export { App };
