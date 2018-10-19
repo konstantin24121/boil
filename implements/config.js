@@ -25,6 +25,7 @@ let config = {
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV !== 'development',
   appId: 'app',
+  hostname: 'l.boil.io',
   get hmrServer() {
     return `http://${this.host}:${this.port + 1}/`;
   },

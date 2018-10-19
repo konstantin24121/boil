@@ -8,6 +8,8 @@ import Html from './components/Html';
 import { configureStore } from 'common/reduck/store';
 import { Root } from './Root';
 import Helmet from 'react-helmet';
+import { StaticContext, StaticRouterContext } from 'react-router';
+import { errorHandle } from './utils/errorHandler';
 
 const pe = new PrettyError();
 
@@ -23,11 +25,13 @@ export default function(parameters) {
   server.get('*', (req, res) => {
     const assets = parameters.chunks();
 
-    const context = {};
+    const context: StaticRouterContext = {};
     const store = configureStore({ user: { count: 50 } });
     const content = renderToString(<Root {...{ store, context, url: req.url }} />);
     const emotionsStyles = extractCritical(content);
     const helmet = Helmet.renderStatic();
+
+    errorHandle(context, res);
 
     res.send(`<!doctype html>\n
       ${renderToString(
