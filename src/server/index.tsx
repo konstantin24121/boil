@@ -8,7 +8,7 @@ import Html from './components/Html';
 import { configureStore } from 'common/reduck/store';
 import { Root } from './Root';
 import Helmet from 'react-helmet';
-import { StaticContext, StaticRouterContext } from 'react-router';
+import { StaticRouterContext } from 'react-router';
 import { errorHandle } from './utils/errorHandler';
 
 const pe = new PrettyError();
@@ -54,6 +54,21 @@ export default function(parameters) {
       return;
     }
 
-    console.info(`Ssr server started at http://${global.boil.host}:${global.boil.port}.`);
+    console.info(`Ssr server started at \x1b[36mhttp://${global.boil.host}:${
+      global.boil.port
+    }\x1b[0m.`);
+
+    if (global.boil.isDevelopment) {
+      console.log(`🔥🔥🔥 Tip 🔥🔥🔥
+You can use it for debuggins on all devices at your network 📱`);)
+    }
+
+    if (global.boil.hostname && global.boil.isDevelopment) {
+      console.info(
+        `For better expirience on current device you can use \x1b[36mhttp://${
+          global.boil.hostname
+        }:${global.boil.port} instead\x1b[0m.`,
+      );
+    }
   });
 }

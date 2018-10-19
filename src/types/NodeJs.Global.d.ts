@@ -8,6 +8,7 @@ interface Boil {
   entryPoint: string;
   hmrServer: string;
   appId: string;
+  hostname: string;
 }
 
 declare namespace NodeJS {
