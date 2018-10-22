@@ -2,7 +2,11 @@ const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
 
 const plugins = [];
 
-if (process.env.IS_SERVER_BUNDLE && process.env.IS_SERVER_BUNDLE === 'false') {
+if (
+  process.env.IS_SERVER_BUNDLE &&
+  process.env.IS_SERVER_BUNDLE === 'false' &&
+  global.boil.bugsnagId
+) {
   plugins.push(
     new BugsnagSourceMapUploaderPlugin({
       apiKey: global.boil.bugsnagId,

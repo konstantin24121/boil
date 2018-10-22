@@ -12,9 +12,9 @@ import { configureStore } from 'common/reduck/store';
 const store = configureStore(getInitialState());
 const dist = document.getElementById(__APP_ID__);
 
-if (!__DEVELOPMENT__) {
+if (!__DEVELOPMENT__ && __BUGSNAG_ID__) {
   const bugsnagClient = bugsnag({
-    apiKey: 'c6dcfa47308b7d10015b70c6d6fed6dd',
+    apiKey: __BUGSNAG_ID__,
     appVersion: __APP_META__.version,
     releaseStage: 'production',
     metaData: {},

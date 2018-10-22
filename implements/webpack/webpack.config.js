@@ -69,6 +69,7 @@ const commonConfig = {
       __IS_SERVER_BUNDLE__: process.env.IS_SERVER_BUNDLE,
       __DEVELOPMENT__: JSON.stringify(global.boil.isDevelopment),
       __APP_ID__: JSON.stringify(global.boil.appId),
+      __BUGSNAG_ID__: JSON.stringify(global.boil.bugsnagId),
       __APP_META__: JSON.stringify(global.boil.appMeta),
     }),
     new ForkTsCheckerWebpackPlugin(),
