@@ -1,5 +1,5 @@
 export const config = {
-  name: 'Boilzad',
+  name: __APP_META__.name,
   routes: {
     home: '/',
     about: '/about',

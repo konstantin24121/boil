@@ -66,9 +66,10 @@ const commonConfig = {
   plugins: [
     new webpack.DefinePlugin({
       __ENV__: JSON.stringify(process.env.NODE_ENV),
-      __IS_SERVER_BUNDLE__: JSON.stringify(process.env.IS_SERVER_BUNDLE),
+      __IS_SERVER_BUNDLE__: process.env.IS_SERVER_BUNDLE,
       __DEVELOPMENT__: JSON.stringify(global.boil.isDevelopment),
       __APP_ID__: JSON.stringify(global.boil.appId),
+      __APP_META__: JSON.stringify(global.boil.appMeta),
     }),
     new ForkTsCheckerWebpackPlugin(),
   ],

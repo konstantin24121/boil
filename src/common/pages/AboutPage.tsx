@@ -7,12 +7,13 @@ import { RedirectWithStatus } from 'atoms/RedirectWithStatus';
 
 export class AboutPage extends React.Component<{}, {}> {
   public render() {
+    const whatever = undefined;
     return (
       <>
         <Helmet>
           <title>About and fuckit</title>
         </Helmet>
-        <div>about</div>
+        <div onClick={() => whatever.zad}>about</div>
         <Link to={`${config.routes.about}/zad`}>wrong way</Link>
         <Switch>
           <Route

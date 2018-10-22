@@ -9,6 +9,10 @@ interface Boil {
   hmrServer: string;
   appId: string;
   hostname: string;
+  appMeta: {
+    version: string;
+    name: string;
+  };
 }
 
 declare namespace NodeJS {

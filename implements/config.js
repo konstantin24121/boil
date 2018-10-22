@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const context = process.cwd();
 const path = require('path');
+const packageData = require('../package.json');
 
 const os = require('os');
 const ifaces = os.networkInterfaces();
@@ -25,7 +26,12 @@ let config = {
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV !== 'development',
   appId: 'app',
+  bugsnagId: 'c6dcfa47308b7d10015b70c6d6fed6dd',
   hostname: 'l.boil.io',
+  appMeta: {
+    version: packageData.version,
+    name: packageData.name,
+  },
   get hmrServer() {
     return `http://${this.host}:${this.port + 1}/`;
   },
