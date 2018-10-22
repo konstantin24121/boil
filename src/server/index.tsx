@@ -7,9 +7,11 @@ import { extractCritical } from 'emotion-server';
 import Html from './components/Html';
 import { configureStore } from 'common/reduck/store';
 import { Root } from './Root';
+import { router } from 'common/router';
 import Helmet from 'react-helmet';
 import { StaticRouterContext } from 'react-router';
 import { errorHandle } from './utils/errorHandler';
+import { prefetchData } from 'utils/prefetchData';
 
 const pe = new PrettyError();
 
@@ -27,25 +29,27 @@ export default function(parameters) {
 
     const context: StaticRouterContext = {};
     const store = configureStore({ user: { count: 50 } });
-    const content = renderToString(<Root {...{ store, context, url: req.url }} />);
-    const emotionsStyles = extractCritical(content);
-    const helmet = Helmet.renderStatic();
 
-    errorHandle(context, res);
+    prefetchData(store, router, req.url).then(() => {
+      const content = renderToString(<Root {...{ store, context, url: req.url }} />);
+      const emotionsStyles = extractCritical(content);
+      const helmet = Helmet.renderStatic();
 
-    res.send(`<!doctype html>\n
-      ${renderToString(
-        <Html
-          {...{
-            store,
-            helmet,
-            assets,
-            content,
-          }}
-          css={emotionsStyles.css}
-          emotionIds={emotionsStyles.ids}
-        />,
-      )}`);
+      errorHandle(context, res);
+      res.send(`<!doctype html>\n
+        ${renderToString(
+          <Html
+            {...{
+              store,
+              helmet,
+              assets,
+              content,
+            }}
+            css={emotionsStyles.css}
+            emotionIds={emotionsStyles.ids}
+          />,
+        )}`);
+    });
   });
 
   http.createServer(server).listen(global.boil.port, global.boil.host, (err) => {
@@ -54,13 +58,13 @@ export default function(parameters) {
       return;
     }
 
-    console.info(`Ssr server started at \x1b[36mhttp://${global.boil.host}:${
-      global.boil.port
-    }\x1b[0m.`);
+    console.info(
+      `Ssr server started at \x1b[36mhttp://${global.boil.host}:${global.boil.port}\x1b[0m.`,
+    );
 
     if (global.boil.isDevelopment) {
       console.log(`🔥🔥🔥 Tip 🔥🔥🔥
-You can use it for debuggins on all devices at your network 📱`);)
+You can use it for debuggins on all devices at your network 📱`);
     }
 
     if (global.boil.hostname && global.boil.isDevelopment) {

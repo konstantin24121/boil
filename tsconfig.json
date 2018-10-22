@@ -10,13 +10,10 @@
     "paths": {
       "modules/*": ["./common/reduck/modules/*"],
       "atoms/*": ["./common/components/atoms/*"],
-      "icons/*": [
-        "./static/icons/*"
-      ],
+      "icons/*": ["./static/icons/*"],
       "common/*": ["./common/*"],
+      "utils/*": ["./utils/*"]
     }
   },
-  "include": [
-    "./src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }
