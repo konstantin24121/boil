@@ -12,7 +12,7 @@
     "dev:webpack-ssr-server": "better-npm-run start-dev-ssr",
     "dev:server": "nodemon ./implements/servers/ssr-server.js --watch ./dist",
     "lint": "tslint \"src/app/**/*.ts\" \"src/app/**/*.tsx\" --project ./tsconfig.json",
-    "start": "nodemon ./implements/servers/ssr-server.js"
+    "start": "better-npm-run start"
   },
   "betterScripts": {
     "dev": {
@@ -38,6 +38,12 @@
       "command": "webpack --colors --progress --display-error-details --config implements/universal-webpack/webpack.config.server.js",
       "env": {
         "IS_SERVER_BUNDLE": true
+      }
+    },
+    "start": {
+      "command": "nodemon ./implements/servers/ssr-server.js",
+      "env": {
+        "PORT": 8080
       }
     }
   },
@@ -100,6 +106,7 @@
     "emotion-theming": "^9.2.9",
     "express": "^4.16.4",
     "memory-cache": "^0.2.0",
+    "node-cmd": "^3.0.0",
     "pretty-error": "^2.1.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
