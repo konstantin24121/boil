@@ -99,6 +99,7 @@
     "emotion-server": "^9.2.12",
     "emotion-theming": "^9.2.9",
     "express": "^4.16.4",
+    "memory-cache": "^0.2.0",
     "pretty-error": "^2.1.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

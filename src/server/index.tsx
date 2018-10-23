@@ -12,6 +12,7 @@ import Helmet from 'react-helmet';
 import { StaticRouterContext } from 'react-router';
 import { errorHandle } from './utils/errorHandler';
 import { prefetchData } from 'utils/prefetchData';
+import { cache } from './utils/cache';
 
 const pe = new PrettyError();
 
@@ -24,7 +25,7 @@ export default function(parameters) {
   server.use(express.static(global.boil.dist, { index: false }));
 
   // send all requests to index.html so browserHistory works
-  server.get('*', (req, res) => {
+  server.get('*', cache(), (req, res) => {
     const assets = parameters.chunks();
 
     const context: StaticRouterContext = {};

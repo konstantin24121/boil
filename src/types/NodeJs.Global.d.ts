@@ -9,6 +9,8 @@ interface Boil {
   hmrServer: string;
   appId: string;
   hostname: string;
+  cacheLimit: number;
+  cacheLifeTime: number;
   appMeta: {
     version: string;
     name: string;

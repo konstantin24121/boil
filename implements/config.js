@@ -28,6 +28,8 @@ let config = {
   appId: 'app',
   bugsnagId: 'c6dcfa47308b7d10015b70c6d6fed6dd',
   hostname: 'l.boil.io',
+  cacheLifeTime: 60 * 1000,
+  cacheLimit: 1000,
   appMeta: {
     version: packageData.version,
     name: packageData.name,
