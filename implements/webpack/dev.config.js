@@ -36,7 +36,7 @@ const hmrConfig = {
   plugins: [new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin()],
 };
 
-if (/^dev/.test(target)) {
+if (process.env.HMR === 'true') {
   module.exports = merge.smart(commonConfig, hmrConfig);
 } else {
   module.exports = merge.smart(commonConfig, clearConfig);

@@ -19,7 +19,8 @@
       "command": "concurrent --kill-others \"npm run dev:webpack-hmr-server\" \"npm run dev:webpack-ssr-server\" \"npm run dev:server\"",
       "env": {
         "IS_SERVER_BUNDLE": false,
-        "NODE_ENV": "development"
+        "NODE_ENV": "development",
+        "HMR": true
       }
     },
     "start-dev-ssr": {

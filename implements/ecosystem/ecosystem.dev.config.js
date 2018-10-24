@@ -14,11 +14,11 @@ module.exports = {
     },
     {
       name: 'hmr-server',
-      instances: 1,
       script: './implements/servers/hmr-server.js',
       env: {
         IS_SERVER_BUNDLE: false,
         NODE_ENV: 'development',
+        HMR: true,
       },
     },
     {
