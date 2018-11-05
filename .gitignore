@@ -35,3 +35,4 @@ dist
 
 # Generated files
 src/static/icons/*.ts
+reports/*

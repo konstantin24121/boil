@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { UserModuleActions } from 'modules/user';
 import { Link } from 'react-router-dom';
 import { config } from 'common/config';
+import { LoadableComponent } from 'atoms/Loadable';
 
 interface IOwnProps {}
 interface IStateProps {
@@ -50,3 +51,5 @@ export const HomePage = connect<IStateProps, IDispatchersProps, IOwnProps, IRoot
     decrement: (count?: number) => dispatch(UserModuleActions.decrement(count)),
   }),
 )(HomePagePure);
+
+export default HomePage;

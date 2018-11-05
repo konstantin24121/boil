@@ -1,9 +1,11 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import { Route, Switch, Redirect } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { config } from 'common/config';
 import { Link } from 'react-router-dom';
 import { RedirectWithStatus } from 'atoms/RedirectWithStatus';
+import { Icon } from 'atoms/Icon';
+import { EIconNames } from 'icons/IconsManifest';
 
 export class AboutPage extends React.Component<{}, {}> {
   public render() {
@@ -28,7 +30,10 @@ export class AboutPage extends React.Component<{}, {}> {
             render={() => (
               <>
                 <Link to={config.routes.about}>do not sneaking</Link>
-                <div>Hey! somebody sneaking around</div>
+                <div>
+                  Hey! somebody sneaking around
+                  <Icon name={EIconNames.infinity} />
+                </div>
               </>
             )}
           />
@@ -38,3 +43,5 @@ export class AboutPage extends React.Component<{}, {}> {
     );
   }
 }
+
+export default AboutPage;

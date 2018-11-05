@@ -12,6 +12,7 @@
     "dev:webpack-ssr-server": "better-npm-run start-dev-ssr",
     "dev:server": "nodemon ./implements/servers/ssr-server.js --watch ./dist",
     "lint": "tslint \"src/app/**/*.ts\" \"src/app/**/*.tsx\" --project ./tsconfig.json",
+    "analyze": "better-npm-run analyze",
     "start": "better-npm-run start"
   },
   "betterScripts": {
@@ -41,6 +42,12 @@
         "IS_SERVER_BUNDLE": true
       }
     },
+    "analyze": {
+      "command": "npm run build",
+      "env": {
+        "WITH_ANALYZE": true
+      }
+    },
     "start": {
       "command": "nodemon ./implements/servers/ssr-server.js",
       "env": {
@@ -61,6 +68,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
@@ -68,6 +76,7 @@
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
     "@types/react-helmet": "^5.0.7",
+    "@types/react-loadable": "^5.4.1",
     "@types/react-redux": "^6.0.9",
     "@types/react-router": "^4.0.32",
     "@types/react-router-config": "^1.0.9",
@@ -113,12 +122,14 @@
     "react-dom": "^16.5.2",
     "react-emotion": "^9.2.12",
     "react-helmet": "^5.2.0",
+    "react-loadable": "^5.5.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.4.0-beta.1",
     "react-router-config": "^4.4.0-beta.1",
     "react-router-dom": "^4.4.0-beta.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "serialize-javascript": "^1.5.0"
+    "serialize-javascript": "^1.5.0",
+    "webpack-bundle-analyzer": "^3.0.3"
   }
 }

@@ -18,6 +18,13 @@ Object.keys(ifaces).forEach(function(ifname) {
   });
 });
 
+function getPlatformName() {
+  if (process.env.IS_SERVER_BUNDLE === 'true') {
+    return 'server';
+  }
+  return 'web';
+}
+
 let config = {
   port: +process.env.PORT || 3000,
   host: process.env.HOST || host,
@@ -30,6 +37,7 @@ let config = {
   hostname: 'l.boil.io',
   cacheLifeTime: 60 * 1000,
   cacheLimit: 1000,
+  platformName: getPlatformName(),
   appMeta: {
     version: packageData.version,
     name: packageData.name,

@@ -1,18 +1,42 @@
+const context = process.cwd();
+const path = require('path');
+const webpack = require('webpack');
+
 const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const plugins = [];
 
-if (
-  process.env.IS_SERVER_BUNDLE &&
-  process.env.IS_SERVER_BUNDLE === 'false' &&
-  global.boil.bugsnagId
-) {
+const isServerBundle = process.env.IS_SERVER_BUNDLE && process.env.IS_SERVER_BUNDLE === 'true';
+
+if (!isServerBundle && global.boil.bugsnagId) {
   plugins.push(
     new BugsnagSourceMapUploaderPlugin({
       apiKey: global.boil.bugsnagId,
       appVersion: global.boil.appMeta.version,
       overwrite: true,
       publicPath: '*/',
+    }),
+  );
+}
+
+if (process.env.WITH_ANALYZE) {
+  plugins.push(
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: path.join(
+        context,
+        `reports/${global.boil.platformName}/${
+          global.boil.appMeta.version
+        }/${Date.now()}/report.html`,
+      ),
+      generateStatsFile: true,
+      statsFilename: path.join(
+        context,
+        `reports/${global.boil.platformName}/${
+          global.boil.appMeta.version
+        }/${Date.now()}/stats.json`,
+      ),
     }),
   );
 }
@@ -26,10 +50,37 @@ const config = {
 
   output: {
     publicPath: '/',
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].js',
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[name].[contenthash].js',
   },
-  plugins,
+  plugins: [...plugins, new webpack.HashedModuleIdsPlugin()],
+
+  optimization: isServerBundle
+    ? {}
+    : {
+        runtimeChunk: 'single',
+        splitChunks: {
+          chunks: 'all',
+          minSize: 0,
+          maxSize: 0,
+          minChunks: 1,
+          maxAsyncRequests: 5,
+          maxInitialRequests: Infinity,
+          automaticNameDelimiter: '~',
+          name: true,
+          cacheGroups: {
+            vendors: {
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10,
+            },
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true,
+            },
+          },
+        },
+      },
 };
 
 module.exports = config;
