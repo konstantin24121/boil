@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/atom/Icon Should render correct icon 1`] = `
+<Styled(span)
+  color="currentColor"
+  height="auto"
+  rotate={0}
+  width="1em"
+>
+  <Component
+    height="100%"
+    width="100%"
+  />
+</Styled(span)>
+`;

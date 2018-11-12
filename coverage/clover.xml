@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1542062293104" clover="3.2.0">
+  <project timestamp="1542062293104" name="All files">
+    <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1" elements="12" coveredelements="10" complexity="0" loc="10" ncloc="10" packages="1" files="1" classes="1">
+      <file name="Icon.tsx" path="C:\Users\konst\seage\boil\src\common\components\atoms\Icon.tsx">
+        <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+      </file>
+    </metrics>
+  </project>
+</coverage>
