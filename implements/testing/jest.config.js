@@ -11,6 +11,7 @@ module.exports = {
   moduleNameMapper: {
     '^icons/(.*)': '<rootDir>/src/static/icons/$1',
     '^atoms/(.*)': '<rootDir>/src/common/components/atoms/$1',
+    '^static/(.*)': '<rootDir>/src/static/$1',
   },
   rootDir: '../..',
   snapshotSerializers: ['enzyme-to-json/serializer', 'jest-emotion/serializer'],

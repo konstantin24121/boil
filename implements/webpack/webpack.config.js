@@ -21,6 +21,7 @@ const commonConfig = {
       atoms: path.join(global.boil.src, 'common/components/atoms'),
       modules: path.join(global.boil.src, 'common/reduck/modules'),
       icons: path.join(global.boil.src, 'static/icons'),
+      static: path.join(global.boil.src, 'static'),
       utils: path.join(global.boil.src, 'utils'),
     },
   },

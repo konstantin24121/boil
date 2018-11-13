@@ -11,6 +11,7 @@
       "modules/*": ["./common/reduck/modules/*"],
       "atoms/*": ["./common/components/atoms/*"],
       "icons/*": ["./static/icons/*"],
+      "static/*": ["./static/*"],
       "common/*": ["./common/*"],
       "utils/*": ["./utils/*"]
     }

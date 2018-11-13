@@ -3,29 +3,29 @@ import { ThemeProvider } from 'emotion-theming';
 import { theme } from './theme';
 import { renderRoutes, RouteConfigComponentProps } from 'react-router-config';
 import { injectGlobal } from 'react-emotion';
-import { prefetchData } from 'utils/prefetchData';
+import { EOLocale } from 'eo-locale';
+import { connect } from 'react-redux';
+import { ILocaleModuleState } from 'modules/locale';
 
-interface IAppProps extends RouteConfigComponentProps {
-  store: IRootState;
-}
+interface IOwnProps {}
+interface IStateProps extends Pick<ILocaleModuleState, 'currentLocale' | 'locales'> {}
+interface IProps extends IOwnProps, IStateProps, RouteConfigComponentProps {}
 
-export class App extends React.Component<IAppProps> {
+class AppClean extends React.Component<IProps> {
   public constructor(props) {
     super(props);
     applyGlobalStyles();
   }
 
-  // public componentWillReceiveProps(nextProps) {
-  //   const navigated = nextProps.location !== this.props.location;
-  //   if (navigated) {
-  //     const { store } = this.props;
-  //     prefetchData(store, this.props.route.routes, nextProps.location.pathname);
-  //   }
-  // }
-
   public render() {
-    const { route } = this.props;
-    return <ThemeProvider {...{ theme }}>{renderRoutes(route.routes)}</ThemeProvider>;
+    const { route, currentLocale, locales } = this.props;
+    return (
+      <ThemeProvider {...{ theme }}>
+        <EOLocale.Provider language={currentLocale} locales={locales}>
+          {renderRoutes(route.routes)}
+        </EOLocale.Provider>
+      </ThemeProvider>
+    );
   }
 }
 
@@ -39,3 +39,8 @@ const applyGlobalStyles = () => injectGlobal`
     color: ${theme.colorAccented};
   }
 `;
+
+export const App = connect<IStateProps, IOwnProps, IRootState>((state: IRootState) => ({
+  currentLocale: state.locale.currentLocale,
+  locales: state.locale.locales,
+}))(AppClean);

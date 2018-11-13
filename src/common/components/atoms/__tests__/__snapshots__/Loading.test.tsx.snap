@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/atom/Loading Should render correct 1`] = `"Loading..."`;

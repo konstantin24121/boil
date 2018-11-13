@@ -8,6 +8,10 @@ import { UserModuleActions } from 'modules/user';
 import { Link } from 'react-router-dom';
 import { config } from 'common/config';
 import { LoadableComponent } from 'atoms/Loadable';
+import { EOLocale } from 'eo-locale';
+import { IWithLocaleProps } from 'eo-locale/dist/withLocale';
+import { LocaleModuleActions } from 'modules/locale';
+import { EAvaliableLanguages } from 'static/locales/types';
 
 interface IOwnProps {}
 interface IStateProps {
@@ -16,22 +20,34 @@ interface IStateProps {
 interface IDispatchersProps {
   increment: () => any;
   decrement: (count?: number) => any;
+  setLocale: (locale: EAvaliableLanguages) => any;
 }
-interface IProps extends IOwnProps, IStateProps, IDispatchersProps {}
+interface IProps extends IOwnProps, IStateProps, IDispatchersProps, IWithLocaleProps {}
 
 export class HomePagePure extends React.Component<IProps, {}> {
   public render() {
     return (
       <>
         <Helmet>
-          <title>Fuck that Title</title>
+          <title>{this.props.formatMessage('PAGETITLE.FUCK')}</title>
         </Helmet>
         <StyledComponent underlined onClick={this.handleClick}>
-          Fuck that shit {this.props.count} timess
+          <EOLocale.Text id="COMMON.FUCK_THAT" count={this.props.count} />
           <Link to={config.routes.about}>
             <Icon name={EIconNames.infinity} />
           </Link>
         </StyledComponent>
+        <button
+          onClick={() => {
+            this.props.setLocale(
+              this.props.language === EAvaliableLanguages.EN
+                ? EAvaliableLanguages.RU
+                : EAvaliableLanguages.EN,
+            );
+          }}
+        >
+          Change language
+        </button>
       </>
     );
   }
@@ -43,13 +59,12 @@ export class HomePagePure extends React.Component<IProps, {}> {
 }
 
 export const HomePage = connect<IStateProps, IDispatchersProps, IOwnProps, IRootState>(
-  (state) => ({
-    count: state.user.count,
-  }),
+  (state) => ({ count: state.user.count }),
   (dispatch) => ({
     increment: () => dispatch(UserModuleActions.increment()),
     decrement: (count?: number) => dispatch(UserModuleActions.decrement(count)),
+    setLocale: (locale) => dispatch(LocaleModuleActions.changeLocale(locale)),
   }),
-)(HomePagePure);
+)(EOLocale.withLocale(HomePagePure));
 
 export default HomePage;
