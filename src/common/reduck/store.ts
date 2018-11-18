@@ -1,7 +1,12 @@
 import { createStore, applyMiddleware, compose, Store, Action } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { config } from 'common/config';
 
-const middleware = [];
+const epicMiddleware = createEpicMiddleware();
+
+const middleware = [epicMiddleware];
 
 let enhancer;
 
@@ -19,8 +24,13 @@ if (__DEVELOPMENT__ && typeof window === 'object' && window.__REDUX_DEVTOOLS_EXT
 
 const configureStore = (initialState?: Partial<IRootState>): Store<IRootState> => {
   const { rootReducer } = require('./rootReduser');
+  const { rootEpic } = require('./rootEpic');
 
-  const store = createStore<IRootState, Action<any>, {}, {}>(rootReducer, initialState, enhancer);
+  const epic$ = new BehaviorSubject(rootEpic);
+
+  const hotReloadingEpic = (...args) => epic$.pipe(switchMap((epic) => epic(...args)));
+
+  const store = createStore<IRootState, Action<{}>, {}, {}>(rootReducer, initialState, enhancer);
 
   if (module.hot) {
     module.hot.accept('./rootReduser', () => {
@@ -28,7 +38,14 @@ const configureStore = (initialState?: Partial<IRootState>): Store<IRootState> =
 
       store.replaceReducer(nextRootReducer);
     });
+
+    module.hot.accept('./rootEpic', () => {
+      const nextRootEpic = require('./rootEpic').rootEpic;
+      epic$.next(nextRootEpic);
+    });
   }
+
+  epicMiddleware.run(hotReloadingEpic as any);
 
   return store;
 };

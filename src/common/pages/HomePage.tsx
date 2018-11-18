@@ -18,9 +18,9 @@ interface IStateProps {
   count: number;
 }
 interface IDispatchersProps {
-  increment: () => any;
-  decrement: (count?: number) => any;
-  setLocale: (locale: EAvaliableLanguages) => any;
+  increment: () => void;
+  decrement: (count?: number) => void;
+  setLocale: (locale: EAvaliableLanguages) => void;
 }
 interface IProps extends IOwnProps, IStateProps, IDispatchersProps, IWithLocaleProps {}
 
@@ -31,7 +31,9 @@ export class HomePagePure extends React.Component<IProps, {}> {
         <Helmet>
           <title>{this.props.formatMessage('PAGETITLE.FUCK')}</title>
         </Helmet>
-        <StyledComponent underlined onClick={this.handleClick}>
+        <StyledComponent underlined>
+          <button onClick={() => this.props.increment()}>inc</button>
+          <button onClick={() => this.props.decrement(2)}>dec</button>
           <EOLocale.Text id="COMMON.FUCK_THAT" count={this.props.count} />
           <Link to={config.routes.about}>
             <Icon name={EIconNames.infinity} />
@@ -51,11 +53,6 @@ export class HomePagePure extends React.Component<IProps, {}> {
       </>
     );
   }
-
-  private handleClick = () => {
-    this.props.increment();
-    this.props.decrement(2);
-  };
 }
 
 export const HomePage = connect<IStateProps, IDispatchersProps, IOwnProps, IRootState>(

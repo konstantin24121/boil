@@ -11,7 +11,7 @@ export interface IIconProps extends React.HTMLAttributes<SVGElement> {
   rotate?: number;
 }
 
-export class Icon extends React.Component<IIconProps, any> {
+export class Icon extends React.Component<IIconProps, {}> {
   public static defaultProps = {
     width: '1em',
     height: 'auto',
