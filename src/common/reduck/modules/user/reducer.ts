@@ -1,11 +1,14 @@
 import { IUserModuleState } from './';
 import * as actions from './actions';
 
-const initialState: IUserModuleState = {
+export const initialState: IUserModuleState = {
   count: 10,
 };
 
-export function userReducer(state = initialState, action: actions.TActions): IUserModuleState {
+export function userReducer(
+  state = initialState,
+  action: actions.TActions,
+): IUserModuleState {
   switch (action.type) {
     case actions.ETypes.Inc: {
       const count = state.count + 1;

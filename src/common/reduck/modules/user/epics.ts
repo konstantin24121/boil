@@ -1,13 +1,16 @@
 import { ofType } from '@martin_hotell/rex-tils';
-import { ETypes, Actions } from './actions';
-import { ActionsObservable } from 'redux-observable';
+import * as action from './actions';
+import { ActionsObservable, StateObservable } from 'redux-observable';
 import { delay, mapTo } from 'rxjs/operators';
 
-const increment = (action$: ActionsObservable<Actions>) =>
+export const increment = (
+  action$: ActionsObservable<action.TActions>,
+  $state: StateObservable<IRootState>,
+) =>
   action$.pipe(
-    ofType(ETypes.Inc),
+    ofType(action.ETypes.Inc),
     delay(1000),
-    mapTo(Actions.decrement(2)),
+    mapTo(action.Actions.decrement(2)),
   );
 
 export default [increment];
