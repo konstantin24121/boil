@@ -11,7 +11,7 @@
     "dev:webpack-hmr-server": "node ./implements/servers/hmr-server.js",
     "dev:webpack-ssr-server": "better-npm-run start-dev-ssr",
     "dev:server": "nodemon ./implements/servers/ssr-server.js --watch ./dist",
-    "lint": "tslint \"src/app/**/*.ts\" \"src/app/**/*.tsx\" --project ./tsconfig.json",
+    "lint": "tslint \"src/server/*.ts\" \"src/common/*.ts\" \"src/client/*.tsx\" \"src/utils/*.ts\" --project ./tsconfig.json --fix",
     "analyze": "better-npm-run analyze",
     "test": "jest --config ./implements/testing/jest.config.js --no-cache",
     "start": "better-npm-run start"

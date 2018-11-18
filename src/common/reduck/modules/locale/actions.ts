@@ -6,7 +6,8 @@ export enum ETypes {
 }
 
 export const Actions = {
-  changeLocale: (locale: EAvaliableLanguages) => createAction(ETypes.ChangeLocale, { locale }),
+  changeLocale: (locale: EAvaliableLanguages) =>
+    createAction(ETypes.ChangeLocale, { locale }),
 };
 
 export type TActions = ActionsUnion<typeof Actions>;

@@ -21,7 +21,9 @@ export class AboutPage extends React.Component<{}, {}> {
           <Route
             exact
             path={config.routes.about}
-            render={() => <Link to={config.routes.someBodySneakingAround}>sneaking</Link>}
+            render={() => (
+              <Link to={config.routes.someBodySneakingAround}>sneaking</Link>
+            )}
           />
 
           <Route

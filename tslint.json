@@ -2,7 +2,7 @@
   "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
     "max-line-length": {
-      "options": [100]
+      "options": [80]
     },
     "ordered-imports": false,
     "no-submodule-imports": false,

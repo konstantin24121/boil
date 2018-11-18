@@ -18,7 +18,10 @@ export const initialState: ILocaleModuleState = {
   locales,
 };
 
-export function localeReducer(state = initialState, action: actions.TActions): ILocaleModuleState {
+export function localeReducer(
+  state = initialState,
+  action: actions.TActions,
+): ILocaleModuleState {
   switch (action.type) {
     case actions.ETypes.ChangeLocale: {
       return { ...state, currentLocale: action.payload.locale };

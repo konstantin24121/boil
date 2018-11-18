@@ -22,7 +22,11 @@ interface IDispatchersProps {
   decrement: (count?: number) => void;
   setLocale: (locale: EAvaliableLanguages) => void;
 }
-interface IProps extends IOwnProps, IStateProps, IDispatchersProps, IWithLocaleProps {}
+interface IProps
+  extends IOwnProps,
+    IStateProps,
+    IDispatchersProps,
+    IWithLocaleProps {}
 
 export class HomePagePure extends React.Component<IProps, {}> {
   public render() {
@@ -55,7 +59,12 @@ export class HomePagePure extends React.Component<IProps, {}> {
   }
 }
 
-export const HomePage = connect<IStateProps, IDispatchersProps, IOwnProps, IRootState>(
+export const HomePage = connect<
+  IStateProps,
+  IDispatchersProps,
+  IOwnProps,
+  IRootState
+>(
   (state) => ({ count: state.user.count }),
   (dispatch) => ({
     increment: () => dispatch(UserModuleActions.increment()),

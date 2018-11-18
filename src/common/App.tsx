@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import { ILocaleModuleState } from 'modules/locale';
 
 interface IOwnProps {}
-interface IStateProps extends Pick<ILocaleModuleState, 'currentLocale' | 'locales'> {}
+interface IStateProps
+  extends Pick<ILocaleModuleState, 'currentLocale' | 'locales'> {}
 interface IProps extends IOwnProps, IStateProps, RouteConfigComponentProps {}
 
 class AppClean extends React.Component<IProps> {
@@ -40,7 +41,9 @@ const applyGlobalStyles = () => injectGlobal`
   }
 `;
 
-export const App = connect<IStateProps, IOwnProps, IRootState>((state: IRootState) => ({
-  currentLocale: state.locale.currentLocale,
-  locales: state.locale.locales,
-}))(AppClean);
+export const App = connect<IStateProps, IOwnProps, IRootState>(
+  (state: IRootState) => ({
+    currentLocale: state.locale.currentLocale,
+    locales: state.locale.locales,
+  }),
+)(AppClean);

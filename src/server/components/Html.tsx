@@ -36,18 +36,25 @@ class Html extends React.Component<IHtmlProps> {
           <script
             id="emotionCritical"
             dangerouslySetInnerHTML={{
-              __html: `window.__EMOTION_CRITICAL_IDS__ = ${serialize(emotionIds)}`,
+              __html: `window.__EMOTION_CRITICAL_IDS__ = ${serialize(
+                emotionIds,
+              )}`,
             }}
           />
           <script
             id="serverState"
             dangerouslySetInnerHTML={{
-              __html: `window.__REDUX_INITIAL_STATE__ = ${serialize(store.getState())}`,
+              __html: `window.__REDUX_INITIAL_STATE__ = ${serialize(
+                store.getState(),
+              )}`,
             }}
           />
         </head>
         <body {...bodyAttrs}>
-          <div id={global.boil.appId} dangerouslySetInnerHTML={{ __html: content }} />
+          <div
+            id={global.boil.appId}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
           {this.jsChunks}
         </body>
       </html>
@@ -59,7 +66,9 @@ class Html extends React.Component<IHtmlProps> {
     const jsChunks = [];
     for (const chunk in assets.javascript) {
       if (assets.javascript.hasOwnProperty(chunk)) {
-        jsChunks.push(<script key={chunk} src={assets.javascript[chunk]} charSet="UTF-8" />);
+        jsChunks.push(
+          <script key={chunk} src={assets.javascript[chunk]} charSet="UTF-8" />,
+        );
       }
     }
     return jsChunks;
