@@ -1,12 +1,14 @@
-import { localeReducer, initialState } from '../reducer';
+import { localeReducer, localeReducerInitialState } from '../reducer';
 import * as actions from '../actions';
 import { EAvaliableLanguages } from 'static/locales/types';
 
 describe('Locale reducer', () => {
   it('should return initial state', () => {
-    expect(localeReducer(undefined, { type: 'SOMETHING' } as any)).toEqual(
-      initialState,
-    );
+    expect(
+      localeReducer(undefined, {
+        type: 'SOMETHING',
+      } as any),
+    ).toEqual(localeReducerInitialState);
   });
 
   it('should change current language', () => {

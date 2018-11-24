@@ -12,7 +12,10 @@ import Helmet from 'react-helmet';
 import { StaticRouterContext } from 'react-router';
 import { errorHandle } from './utils/errorHandler';
 import { prefetchData } from 'utils/prefetchData';
+import { loadLocales, getClientLanguage } from './utils/loadLocales';
 import { cache } from './utils/cache';
+import { localeReducerInitialState } from 'modules/locale/reducer';
+import * as cookieParser from 'cookie-parser';
 
 const pe = new PrettyError();
 
@@ -21,37 +24,47 @@ pe.start();
 // (`parameters` may contain some miscellaneous library-specific stuff)
 export default function(parameters) {
   const server: express.Application = express();
+  server.use(cookieParser.default());
+
   // serve our static stuff like index.css
   server.use(express.static(global.boil.dist, { index: false }));
 
   // send all requests to index.html so browserHistory works
   server.get('*', cache(), (req, res) => {
     const assets = parameters.chunks();
-
+    const clientLanguages = getClientLanguage(req);
     const context: StaticRouterContext = {};
-    const store = configureStore({ user: { count: 50 } });
 
-    prefetchData(store, router, req.url).then(() => {
-      const content = renderToString(
-        <Root {...{ store, context, url: req.url }} />,
-      );
-      const emotionsStyles = extractCritical(content);
-      const helmet = Helmet.renderStatic();
+    loadLocales(clientLanguages).then((locales) => {
+      const store = configureStore({
+        user: { count: 50 },
+        locale: {
+          ...localeReducerInitialState,
+          currentLocale:
+            clientLanguages.length !== 0
+              ? clientLanguages[0]
+              : localeReducerInitialState.currentLocale,
+          locales,
+        },
+      });
 
-      errorHandle(context, res);
-      res.send(`<!doctype html>\n
+      prefetchData(store, router, req.url).then(() => {
+        const content = renderToString(
+          <Root {...{ store, context, url: req.url }} />,
+        );
+        const emotionsStyles = extractCritical(content);
+        const helmet = Helmet.renderStatic();
+
+        errorHandle(context, res);
+        res.send(`<!doctype html>\n
         ${renderToString(
           <Html
-            {...{
-              store,
-              helmet,
-              assets,
-              content,
-            }}
+            {...{ store, helmet, assets, content }}
             css={emotionsStyles.css}
             emotionIds={emotionsStyles.ids}
           />,
         )}`);
+      });
     });
   });
 

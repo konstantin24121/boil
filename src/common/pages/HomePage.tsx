@@ -69,7 +69,8 @@ export const HomePage = connect<
   (dispatch) => ({
     increment: () => dispatch(UserModuleActions.increment()),
     decrement: (count?: number) => dispatch(UserModuleActions.decrement(count)),
-    setLocale: (locale) => dispatch(LocaleModuleActions.changeLocale(locale)),
+    setLocale: (locale) =>
+      dispatch(LocaleModuleActions.changeCurrentLocale(locale)),
   }),
 )(EOLocale.withLocale(HomePagePure));
 

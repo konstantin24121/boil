@@ -2,29 +2,29 @@ import { ILocaleModuleState } from './';
 import * as actions from './actions';
 import { EAvaliableLanguages, DEFAULT_LANGUAGE } from 'static/locales/types';
 
-const locales = [
-  {
-    language: EAvaliableLanguages.EN,
-    messages: require('static/locales/en.json'),
-  },
-  {
-    language: EAvaliableLanguages.RU,
-    messages: require('static/locales/ru.json'),
-  },
-];
-
-export const initialState: ILocaleModuleState = {
+export const localeReducerInitialState: ILocaleModuleState = {
   currentLocale: DEFAULT_LANGUAGE,
-  locales,
+  locales: [],
 };
 
 export function localeReducer(
-  state = initialState,
+  state = localeReducerInitialState,
   action: actions.TActions,
 ): ILocaleModuleState {
   switch (action.type) {
     case actions.ETypes.ChangeLocale: {
-      return { ...state, currentLocale: action.payload.locale };
+      if (Object.values(EAvaliableLanguages).includes(action.payload.locale)) {
+        return { ...state, currentLocale: action.payload.locale };
+      }
+      return { ...state, currentLocale: DEFAULT_LANGUAGE };
+    }
+    case actions.ETypes.SetUpLocale: {
+      const locales = [...state.locales];
+      locales.push({
+        language: action.payload.lang,
+        messages: action.payload.messages,
+      });
+      return { ...state, locales };
     }
     default:
       return { ...state };
