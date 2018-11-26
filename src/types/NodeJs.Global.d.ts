@@ -1,3 +1,5 @@
+import { TestScheduler } from 'rxjs/testing';
+
 interface Boil {
   port: number;
   host: string;
@@ -20,6 +22,7 @@ interface Boil {
 declare namespace NodeJS {
   interface Global {
     boil: Boil;
+    scheduler?: TestScheduler;
   }
 }
 

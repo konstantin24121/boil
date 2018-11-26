@@ -1,12 +1,12 @@
 import { IUserModuleState } from './';
 import * as actions from './actions';
 
-export const initialState: IUserModuleState = {
+export const userInitialState: IUserModuleState = {
   count: 10,
 };
 
 export function userReducer(
-  state = initialState,
+  state = userInitialState,
   action: actions.TActions,
 ): IUserModuleState {
   switch (action.type) {

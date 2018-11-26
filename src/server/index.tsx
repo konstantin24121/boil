@@ -26,6 +26,11 @@ export default function(parameters) {
   const server: express.Application = express();
   server.use(cookieParser.default());
 
+  server.get('/server.js', (req, res) => {
+    res.writeHead(404);
+    res.end();
+  });
+
   // serve our static stuff like index.css
   server.use(express.static(global.boil.dist, { index: false }));
 

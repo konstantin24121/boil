@@ -13,10 +13,7 @@ export function localeReducer(
 ): ILocaleModuleState {
   switch (action.type) {
     case actions.ETypes.ChangeLocale: {
-      if (Object.values(EAvaliableLanguages).includes(action.payload.locale)) {
-        return { ...state, currentLocale: action.payload.locale };
-      }
-      return { ...state, currentLocale: DEFAULT_LANGUAGE };
+      return { ...state, currentLocale: action.payload.locale };
     }
     case actions.ETypes.SetUpLocale: {
       const locales = [...state.locales];

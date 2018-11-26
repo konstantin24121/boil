@@ -1,35 +1,30 @@
-import { TestScheduler } from 'rxjs/testing';
-import { userReducer, initialState } from '../reducer';
+import { userReducer, userInitialState } from '../reducer';
 import * as actions from '../actions';
 import * as epics from '../epics';
-
-const scheduler = new TestScheduler((actual, expected) => {
-  expect(actual).toEqual(expected);
-});
 
 describe('User reducer', () => {
   it('should return initial state', () => {
     expect(userReducer(undefined, { type: 'SOMETHING' } as any)).toEqual(
-      initialState,
+      userInitialState,
     );
   });
 
   it('should increment value', () => {
     const changeLocaleAction = actions.Actions.increment();
-    const expected = initialState.count + 1;
+    const expected = userInitialState.count + 1;
     expect(userReducer(undefined, changeLocaleAction).count).toEqual(expected);
   });
 
   it('should decrement value on 1 by default', () => {
     const changeLocaleAction = actions.Actions.decrement();
-    const expected = initialState.count - 1;
+    const expected = userInitialState.count - 1;
     expect(userReducer(undefined, changeLocaleAction).count).toEqual(expected);
   });
 
   it('should decrement custom value', () => {
     const customDec = 10;
     const changeLocaleAction = actions.Actions.decrement(customDec);
-    const expected = initialState.count - customDec;
+    const expected = userInitialState.count - customDec;
     expect(userReducer(undefined, changeLocaleAction).count).toEqual(expected);
   });
 });
@@ -60,7 +55,7 @@ describe('User actions', () => {
 
 describe('User epics', () => {
   it('should call increment epic', () => {
-    scheduler.run(({ hot, expectObservable }) => {
+    global.scheduler.run(({ hot, expectObservable }) => {
       const action$ = hot('-a', {
         a: actions.Actions.increment(),
       });

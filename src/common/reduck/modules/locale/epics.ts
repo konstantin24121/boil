@@ -21,7 +21,6 @@ export const changeLocaleEpic = (
         }
 
         import(/* webpackChunkName: "locale" */
-        /*webpackMode: "lazy" */
         `static/locales/${locale}.json`).then((messages) => {
           observer.next(actions.Actions.setupLocale(locale, messages));
           observer.next(actions.Actions.changeLocale(locale));

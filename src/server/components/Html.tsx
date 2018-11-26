@@ -66,9 +66,16 @@ class Html extends React.Component<IHtmlProps> {
     const jsChunks = [];
     for (const chunk in assets.javascript) {
       if (assets.javascript.hasOwnProperty(chunk)) {
-        jsChunks.push(
-          <script key={chunk} src={assets.javascript[chunk]} charSet="UTF-8" />,
-        );
+        const ignoreLocale = new RegExp(/^locale/);
+        if (!ignoreLocale.test(chunk)) {
+          jsChunks.push(
+            <script
+              key={chunk}
+              src={assets.javascript[chunk]}
+              charSet="UTF-8"
+            />,
+          );
+        }
       }
     }
     return jsChunks;
