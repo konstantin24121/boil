@@ -37,3 +37,8 @@ dist
 src/static/icons/*.ts
 reports/*
 coverage/*
+cert/*.key
+cert/*.csr
+cert/*.pem
+cert/*.cert
+.rnd

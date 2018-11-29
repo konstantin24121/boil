@@ -4,10 +4,12 @@ const webpack = require('webpack');
 
 const { BugsnagSourceMapUploaderPlugin } = require('webpack-bugsnag-plugins');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const plugins = [];
 
-const isServerBundle = process.env.IS_SERVER_BUNDLE && process.env.IS_SERVER_BUNDLE === 'true';
+const isServerBundle =
+  process.env.IS_SERVER_BUNDLE && process.env.IS_SERVER_BUNDLE === 'true';
 
 if (!isServerBundle && global.boil.bugsnagId) {
   plugins.push(
@@ -37,6 +39,17 @@ if (process.env.WITH_ANALYZE) {
           global.boil.appMeta.version
         }/${Date.now()}/stats.json`,
       ),
+    }),
+  );
+}
+
+if (!isServerBundle) {
+  plugins.push(
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
     }),
   );
 }
