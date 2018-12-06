@@ -28,3 +28,7 @@ declare namespace NodeJS {
 declare interface NodeModule {
   hot: any;
 }
+
+declare interface NodeRequire {
+  resolveWeak: any;
+}

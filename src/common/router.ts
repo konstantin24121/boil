@@ -14,10 +14,14 @@ export interface IRouteConfigWithPrefetch extends RouteConfig {
 
 const AsyncHomePage = LoadableComponent({
   loader: () => import('./pages/HomePage'),
+  modules: ['./pages/HomePage'],
+  webpack: () => [require.resolveWeak('./pages/HomePage')],
 });
 
 const AsyncAboutPage = LoadableComponent({
   loader: () => import('./pages/AboutPage'),
+  modules: ['./pages/AboutPage'],
+  webpack: () => [require.resolveWeak('./pages/AboutPage')],
 });
 
 export const router: IRouteConfigWithPrefetch[] = [

@@ -8,6 +8,13 @@ type TChunks = {
   styles: StringObj;
 };
 
+export type TPreloaded = {
+  id: string;
+  file: string;
+  name: string;
+  publicPath: string;
+};
+
 interface IHtmlProps {
   assets: TChunks;
   content: string;
@@ -15,6 +22,7 @@ interface IHtmlProps {
   emotionIds: string[];
   helmet: HelmetData;
   store: Store<IRootState>;
+  preloaded: TPreloaded[];
 }
 
 class Html extends React.Component<IHtmlProps> {
@@ -55,10 +63,31 @@ class Html extends React.Component<IHtmlProps> {
             id={global.boil.appId}
             dangerouslySetInnerHTML={{ __html: content }}
           />
+          {this.preloadedChunks}
           {this.jsChunks}
         </body>
       </html>
     );
+  }
+
+  private get preloadedChunks() {
+    const { preloaded } = this.props;
+    const jsChunks = [];
+    for (const chunk in preloaded) {
+      if (preloaded.hasOwnProperty(chunk)) {
+        const ignoreLocale = new RegExp(/.map$/);
+        if (!ignoreLocale.test(preloaded[chunk].publicPath)) {
+          jsChunks.push(
+            <script
+              key={chunk}
+              src={preloaded[chunk].publicPath}
+              charSet="UTF-8"
+            />,
+          );
+        }
+      }
+    }
+    return jsChunks;
   }
 
   private get jsChunks() {

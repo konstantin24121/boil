@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import bugsnag from 'bugsnag-js';
 import createPlugin from 'bugsnag-react';
-
+import * as Loadable from 'react-loadable';
 import './utils/hydrateEmotionsIds';
 import { getInitialState } from './utils/getInitialState';
 
@@ -11,6 +11,12 @@ import { configureStore } from 'common/reduck/store';
 
 const store = configureStore(getInitialState());
 const dist = document.getElementById(__APP_ID__);
+
+const renderApp = (component) => {
+  Loadable.preloadReady().then(() => {
+    ReactDOM.hydrate(component, dist);
+  });
+};
 
 if (!__DEVELOPMENT__ && __BUGSNAG_ID__) {
   const bugsnagClient = bugsnag({
@@ -22,14 +28,13 @@ if (!__DEVELOPMENT__ && __BUGSNAG_ID__) {
 
   const ErrorBoundary = bugsnagClient.use(createPlugin(React));
 
-  ReactDOM.hydrate(
+  renderApp(
     <ErrorBoundary>
       <Root store={store} />
     </ErrorBoundary>,
-    dist,
   );
 } else {
-  ReactDOM.hydrate(<Root store={store} />, dist);
+  renderApp(<Root store={store} />);
 }
 
 if ('serviceWorker' in navigator) {

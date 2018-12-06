@@ -5,6 +5,20 @@ const webpack = require('webpack');
 const path = require('path');
 const context = process.cwd();
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ReactLoadablePlugin = require('react-loadable/webpack')
+  .ReactLoadablePlugin;
+
+const plugins = [];
+const isServerBundle =
+  process.env.IS_SERVER_BUNDLE && process.env.IS_SERVER_BUNDLE === 'true';
+
+if (!isServerBundle) {
+  plugins.push(
+    new ReactLoadablePlugin({
+      filename: `${global.boil.src}/server/react-loadable.json`,
+    }),
+  );
+}
 
 const commonConfig = {
   context,
@@ -74,6 +88,7 @@ const commonConfig = {
       __APP_META__: JSON.stringify(global.boil.appMeta),
     }),
     new ForkTsCheckerWebpackPlugin(),
+    ...plugins,
   ],
 };
 const productionConfig = require('./prod.config');

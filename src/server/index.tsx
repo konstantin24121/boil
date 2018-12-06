@@ -4,9 +4,10 @@ import * as fs from 'fs';
 import * as https from 'https';
 import * as PrettyError from 'pretty-error';
 import * as React from 'react';
+import * as path from 'path';
 import { renderToString } from 'react-dom/server';
 import { extractCritical } from 'emotion-server';
-import Html from './components/Html';
+import Html, { TPreloaded } from './components/Html';
 import { configureStore } from 'common/reduck/store';
 import { Root } from './Root';
 import { router } from 'common/router';
@@ -18,6 +19,11 @@ import { loadLocales, getClientLanguage } from './utils/loadLocales';
 import { cache } from './utils/cache';
 import { localeReducerInitialState } from 'modules/locale/reducer';
 import * as cookieParser from 'cookie-parser';
+import * as Loadable from 'react-loadable';
+import { getBundles } from 'react-loadable/webpack';
+
+// tslint:disable-next-line:no-var-requires
+const preloadStatsfrom = require('./react-loadable.json');
 
 const pe = new PrettyError();
 
@@ -26,7 +32,7 @@ pe.start();
 // (`parameters` may contain some miscellaneous library-specific stuff)
 export default function(parameters) {
   const server: express.Application = express();
-  server.use(cookieParser.default());
+  server.use(cookieParser());
 
   server.get('/server.js', (req, res) => {
     res.writeHead(404);
@@ -41,6 +47,7 @@ export default function(parameters) {
     const assets = parameters.chunks();
     const clientLanguages = getClientLanguage(req);
     const context: StaticRouterContext = {};
+    const modules = [];
 
     loadLocales(clientLanguages).then((locales) => {
       const store = configureStore({
@@ -57,16 +64,18 @@ export default function(parameters) {
 
       prefetchData(store, router, req.url).then(() => {
         const content = renderToString(
-          <Root {...{ store, context, url: req.url }} />,
+          <Loadable.Capture report={(moduleName) => modules.push(moduleName)}>
+            <Root {...{ store, context, url: req.url }} />
+          </Loadable.Capture>,
         );
         const emotionsStyles = extractCritical(content);
         const helmet = Helmet.renderStatic();
-
+        const preloaded: any[] = getBundles(preloadStatsfrom, modules);
         errorHandle(context, res);
         res.send(`<!doctype html>\n
         ${renderToString(
           <Html
-            {...{ store, helmet, assets, content }}
+            {...{ store, helmet, assets, content, preloaded }}
             css={emotionsStyles.css}
             emotionIds={emotionsStyles.ids}
           />,
@@ -88,29 +97,35 @@ export default function(parameters) {
     hServer = http.createServer(server);
   }
 
-  hServer.listen(global.boil.port, global.boil.host, (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  Loadable.preloadAll()
+    .then(() => {
+      hServer.listen(global.boil.port, global.boil.host, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
 
-    console.info(
-      `Ssr server started at \x1b[36mhttp${global.boil.https ? 's' : ''}://${
-        global.boil.host
-      }:${global.boil.port}\x1b[0m.`,
-    );
+        console.info(
+          `Ssr server started at \x1b[36mhttp${
+            global.boil.https ? 's' : ''
+          }://${global.boil.host}:${global.boil.port}\x1b[0m.`,
+        );
 
-    if (global.boil.isDevelopment) {
-      console.log(`🔥🔥🔥 Tip 🔥🔥🔥
+        if (global.boil.isDevelopment) {
+          console.log(`🔥🔥🔥 Tip 🔥🔥🔥
 You can use it for debuggins on all devices at your network 📱`);
-    }
+        }
 
-    if (global.boil.hostname && global.boil.isDevelopment) {
-      console.info(
-        `For better expirience on current device you can use \x1b[36mhttp${
-          global.boil.https ? 's' : ''
-        }://${global.boil.hostname}:${global.boil.port} instead\x1b[0m.`,
-      );
-    }
-  });
+        if (global.boil.hostname && global.boil.isDevelopment) {
+          console.info(
+            `For better expirience on current device you can use \x1b[36mhttp${
+              global.boil.https ? 's' : ''
+            }://${global.boil.hostname}:${global.boil.port} instead\x1b[0m.`,
+          );
+        }
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }

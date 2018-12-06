@@ -5,6 +5,6 @@ interface IProps extends LoadingComponentProps {}
 
 export class Loading extends React.Component<IProps> {
   public render() {
-    return 'Loading...';
+    return <span>Loading...</span>;
   }
 }
