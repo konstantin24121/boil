@@ -79,7 +79,7 @@ export default function(parameters) {
     const options = {
       hostname: 'demo.local',
       key: fs.readFileSync('cert/server.key'),
-      cert: fs.readFileSync('cert/rootSSL.pem'),
+      cert: fs.readFileSync('cert/server.crt'),
       requestCert: false,
       rejectUnauthorized: false,
     };

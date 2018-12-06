@@ -26,7 +26,7 @@ function getPlatformName() {
 }
 
 let config = {
-  port: +process.env.PORT || 8888,
+  port: +process.env.PORT || 3000,
   host: process.env.HOST || host,
   src: path.resolve(context, 'src'),
   dist: path.resolve(context, 'dist'),
@@ -36,7 +36,7 @@ let config = {
   appId: 'app',
   bugsnagId: 'c6dcfa47308b7d10015b70c6d6fed6dd',
   hostname: 'l.boil.io',
-  https: true,
+  https: false,
   cacheLifeTime: 60 * 1000,
   cacheLimit: 1000,
   platformName: getPlatformName(),
