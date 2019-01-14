@@ -1,6 +1,6 @@
 import { ActionsUnion, createAction } from '@martin_hotell/rex-tils';
 import { EAvaliableLanguages } from 'static/locales/types';
-import { IMessages } from 'eo-locale/dist/models';
+import { TMessage } from 'eo-locale/dist/models';
 
 export enum ETypes {
   ChangeLocale = 'CHANGE_LOCALE',
@@ -13,8 +13,10 @@ export const Actions = {
     createAction(ETypes.ChangeCurrentLocale, { locale }),
   changeLocale: (locale: EAvaliableLanguages) =>
     createAction(ETypes.ChangeLocale, { locale }),
-  setupLocale: (lang: EAvaliableLanguages, messages: IMessages) =>
-    createAction(ETypes.SetUpLocale, { lang, messages }),
+  setupLocale: (
+    lang: EAvaliableLanguages,
+    messages: Record<string, TMessage>,
+  ) => createAction(ETypes.SetUpLocale, { lang, messages }),
 };
 
 export type TActions = ActionsUnion<typeof Actions>;

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import styled, { css } from 'react-emotion';
+import styled from '@emotion/styled';
 import { icons, EIconNames } from 'icons/IconsManifest';
+import { css } from '@emotion/core';
 
 export interface IIconProps extends React.HTMLAttributes<SVGElement> {
   name: EIconNames;
@@ -35,7 +36,10 @@ export class Icon extends React.Component<IIconProps, {}> {
   }
 }
 
-const IconStyler = styled('span')<Partial<IIconProps>>(
+interface IIconStyledProps
+  extends Pick<IIconProps, 'width' | 'height' | 'color' | 'rotate'> {}
+
+const IconStyler = styled('span')<IIconStyledProps>(
   ({ width, height, color, rotate }) => css`
     display: inline-block;
     line-height: 0;

@@ -6,8 +6,7 @@ import * as PrettyError from 'pretty-error';
 import * as React from 'react';
 import * as path from 'path';
 import { renderToString } from 'react-dom/server';
-import { extractCritical } from 'emotion-server';
-import Html, { TPreloaded } from './components/Html';
+import Html from './components/Html';
 import { configureStore } from 'common/reduck/store';
 import { Root } from './Root';
 import { router } from 'common/router';
@@ -68,7 +67,6 @@ export default function(parameters) {
             <Root {...{ store, context, url: req.url }} />
           </Loadable.Capture>,
         );
-        const emotionsStyles = extractCritical(content);
         const helmet = Helmet.renderStatic();
         const preloaded: any[] = getBundles(preloadStatsfrom, modules);
         errorHandle(context, res);
@@ -76,8 +74,6 @@ export default function(parameters) {
         ${renderToString(
           <Html
             {...{ store, helmet, assets, content, preloaded }}
-            css={emotionsStyles.css}
-            emotionIds={emotionsStyles.ids}
           />,
         )}`);
       });

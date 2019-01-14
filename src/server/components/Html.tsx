@@ -18,8 +18,6 @@ export type TPreloaded = {
 interface IHtmlProps {
   assets: TChunks;
   content: string;
-  css: string;
-  emotionIds: string[];
   helmet: HelmetData;
   store: Store<IRootState>;
   preloaded: TPreloaded[];
@@ -27,7 +25,7 @@ interface IHtmlProps {
 
 class Html extends React.Component<IHtmlProps> {
   public render() {
-    const { content, css, emotionIds, store, helmet } = this.props;
+    const { content, store, helmet } = this.props;
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();
 
@@ -39,16 +37,6 @@ class Html extends React.Component<IHtmlProps> {
           {helmet.title.toComponent()}
           {helmet.meta.toComponent()}
           {helmet.link.toComponent()}
-
-          <style dangerouslySetInnerHTML={{ __html: css }} />
-          <script
-            id="emotionCritical"
-            dangerouslySetInnerHTML={{
-              __html: `window.__EMOTION_CRITICAL_IDS__ = ${serialize(
-                emotionIds,
-              )}`,
-            }}
-          />
           <script
             id="serverState"
             dangerouslySetInnerHTML={{

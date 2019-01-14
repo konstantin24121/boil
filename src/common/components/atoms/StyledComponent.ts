@@ -1,17 +1,16 @@
-import styled, { css } from 'react-emotion';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 
 interface IStylesComponentProps extends IThemedComponent {
   underlined?: boolean;
 }
 
 const StyledComponent = styled('div')<IStylesComponentProps>(
-  ({ underlined, theme }) => {
-    return css`
-      font-size: 18px;
-      color: ${theme.color};
-      text-decoration: ${underlined ? 'underline' : undefined};
-    `;
-  },
+  ({ underlined, theme }) => css`
+    font-size: 18px;
+    color: ${theme.color};
+    text-decoration: ${underlined ? 'underline' : undefined};
+  `,
 );
 
 export { StyledComponent };

@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 import bugsnag from 'bugsnag-js';
 import createPlugin from 'bugsnag-react';
 import * as Loadable from 'react-loadable';
-import './utils/hydrateEmotionsIds';
 import { getInitialState } from './utils/getInitialState';
 
 import { Root } from './Root';
