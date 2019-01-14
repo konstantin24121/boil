@@ -1,6 +1,11 @@
 import { userReducer, userInitialState } from '../reducer';
 import * as actions from '../actions';
 import * as epics from '../epics';
+import { TestScheduler } from 'rxjs/testing';
+
+const scheduler = new TestScheduler((actual, expected) => {
+  expect(actual).toEqual(expected);
+});
 
 describe('User reducer', () => {
   it('should return initial state', () => {
@@ -55,7 +60,7 @@ describe('User actions', () => {
 
 describe('User epics', () => {
   it('should call increment epic', () => {
-    global.scheduler.run(({ hot, expectObservable }) => {
+    scheduler.run(({ hot, expectObservable }) => {
       const action$ = hot('-a', {
         a: actions.Actions.increment(),
       });

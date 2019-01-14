@@ -5,6 +5,11 @@ import { EAvaliableLanguages } from 'static/locales/types';
 import { StateObservable } from 'redux-observable';
 import { Subject } from 'rxjs';
 import { userInitialState } from 'modules/user/reducer';
+import { TestScheduler } from 'rxjs/testing';
+
+const scheduler = new TestScheduler((actual, expected) => {
+  expect(actual).toEqual(expected);
+});
 
 describe('Locale reducer', () => {
   it('should return initial state', () => {
@@ -64,7 +69,7 @@ describe('Locale actions', () => {
 
 describe('Locale epics', () => {
   it('should call change locale epic with loadng locale', () => {
-    global.scheduler.run(({ hot, expectObservable }) => {
+    scheduler.run(({ hot, expectObservable }) => {
       const action$ = hot('-a', {
         a: actions.Actions.changeCurrentLocale(EAvaliableLanguages.EN),
       });

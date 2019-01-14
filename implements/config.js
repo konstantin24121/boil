@@ -36,7 +36,7 @@ let config = {
   appId: 'app',
   bugsnagId: 'c6dcfa47308b7d10015b70c6d6fed6dd',
   hostname: 'l.boil.io',
-  https: false,
+  https: true,
   cacheLifeTime: 60 * 1000,
   cacheLimit: 1000,
   platformName: getPlatformName(),
@@ -45,7 +45,7 @@ let config = {
     name: packageData.name,
   },
   get hmrServer() {
-    return `http://${this.host}:${this.port + 1}/`;
+    return `http${this.https ? 's' : ''}://${this.hostname}:${this.port + 1}/`;
   },
   get entryPoint() {
     return path.join(this.src, 'client', 'index.tsx');
