@@ -18,6 +18,7 @@
         "loose": true
       }
     ],
+    "@babel/plugin-transform-regenerator",
     "@babel/plugin-syntax-dynamic-import",
     "react-loadable/babel",
     "react-hot-loader/babel"

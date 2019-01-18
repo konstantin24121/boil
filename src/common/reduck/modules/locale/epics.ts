@@ -1,7 +1,7 @@
 import { ofType } from '@martin_hotell/rex-tils';
 import * as actions from './actions';
 import { ActionsObservable, StateObservable } from 'redux-observable';
-import { switchMap, tap, map, ignoreElements } from 'rxjs/operators';
+import { switchMap, tap, ignoreElements } from 'rxjs/operators';
 import { localeExist } from './utils';
 import { Observable } from 'rxjs';
 import * as cookie from 'js-cookie';

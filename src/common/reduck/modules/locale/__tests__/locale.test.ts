@@ -4,7 +4,6 @@ import * as epics from '../epics';
 import { EAvaliableLanguages } from 'static/locales/types';
 import { StateObservable } from 'redux-observable';
 import { Subject } from 'rxjs';
-import { userInitialState } from 'modules/user/reducer';
 import { TestScheduler } from 'rxjs/testing';
 
 const scheduler = new TestScheduler((actual, expected) => {

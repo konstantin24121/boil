@@ -4,24 +4,23 @@ import { StyledComponent } from 'atoms/StyledComponent';
 import { Icon } from 'atoms/Icon';
 import { EIconNames } from 'icons/IconsManifest';
 import { connect } from 'react-redux';
-import { UserModuleActions } from 'modules/user';
+import {
+  UserModuleActions,
+  TUserModuleActions,
+  IUserModuleState,
+} from 'modules/user';
 import { Link } from 'react-router-dom';
 import { config } from 'common/config';
-import { LoadableComponent } from 'atoms/Loadable';
 import { EOLocale } from 'eo-locale';
 import { IWithLocaleProps } from 'eo-locale/dist/withLocale';
-import { LocaleModuleActions } from 'modules/locale';
+import { LocaleModuleActions, TLocaleModuleActions } from 'modules/locale';
 import { EAvaliableLanguages } from 'static/locales/types';
 
 interface IOwnProps {}
-interface IStateProps {
-  count: number;
-}
-interface IDispatchersProps {
-  increment: () => void;
-  decrement: (count?: number) => void;
-  setLocale: (locale: EAvaliableLanguages) => void;
-}
+interface IStateProps extends Pick<IUserModuleState, 'count'> {}
+interface IDispatchersProps
+  extends Pick<TUserModuleActions, 'increment' | 'decrement' | 'fetchUser'>,
+    Pick<TLocaleModuleActions, 'changeCurrentLocale'> {}
 interface IProps
   extends IOwnProps,
     IStateProps,
@@ -29,6 +28,9 @@ interface IProps
     IWithLocaleProps {}
 
 export class HomePagePure extends React.Component<IProps, {}> {
+  public componentDidMount() {
+    this.props.fetchUser('konstantin24121');
+  }
   public render() {
     return (
       <>
@@ -45,7 +47,7 @@ export class HomePagePure extends React.Component<IProps, {}> {
         </StyledComponent>
         <button
           onClick={() => {
-            this.props.setLocale(
+            this.props.changeCurrentLocale(
               this.props.language === EAvaliableLanguages.EN
                 ? EAvaliableLanguages.RU
                 : EAvaliableLanguages.EN,
@@ -68,8 +70,9 @@ export const HomePage = connect<
   (state) => ({ count: state.user.count }),
   (dispatch) => ({
     increment: () => dispatch(UserModuleActions.increment()),
-    decrement: (count?: number) => dispatch(UserModuleActions.decrement(count)),
-    setLocale: (locale) =>
+    decrement: (count) => dispatch(UserModuleActions.decrement(count)),
+    fetchUser: (login) => dispatch(UserModuleActions.fetchUser(login)),
+    changeCurrentLocale: (locale) =>
       dispatch(LocaleModuleActions.changeCurrentLocale(locale)),
   }),
 )(EOLocale.withLocale(HomePagePure));

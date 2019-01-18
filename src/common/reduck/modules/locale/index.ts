@@ -8,4 +8,4 @@ export type ILocaleModuleState = {
 };
 
 export const LocaleModuleActions = actions.Actions;
-export type TLocaleModuleActions = actions.TActions;
+export type TLocaleModuleActions = typeof LocaleModuleActions;

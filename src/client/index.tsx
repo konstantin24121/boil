@@ -1,4 +1,6 @@
 import * as React from 'react';
+import '@babel/polyfill';
+
 import * as ReactDOM from 'react-dom';
 import bugsnag from 'bugsnag-js';
 import createPlugin from 'bugsnag-react';

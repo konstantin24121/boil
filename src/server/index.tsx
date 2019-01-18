@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import * as express from 'express';
 import * as http from 'http';
 import * as fs from 'fs';
@@ -17,6 +18,7 @@ import { prefetchData } from 'utils/prefetchData';
 import { loadLocales, getClientLanguage } from './utils/loadLocales';
 import { cache } from './utils/cache';
 import { localeReducerInitialState } from 'modules/locale/reducer';
+import { userReducerInitialState } from 'modules/user/reducer';
 import * as cookieParser from 'cookie-parser';
 import * as Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
@@ -41,6 +43,15 @@ export default function(parameters) {
   // serve our static stuff like index.css
   server.use(express.static(global.boil.dist, { index: false }));
 
+  // Simple api
+  server.post('/api/user/:id', (req, res) => {
+    res.json({
+      login: req.params.id,
+      id: 9361325,
+      avatar_url: 'https://avatars3.githubusercontent.com/u/9361325?v=4',
+    });
+  })
+
   // send all requests to index.html so browserHistory works
   server.get('*', cache(), (req, res) => {
     const assets = parameters.chunks();
@@ -50,7 +61,7 @@ export default function(parameters) {
 
     loadLocales(clientLanguages).then((locales) => {
       const store = configureStore({
-        user: { count: 50 },
+        user: { ...userReducerInitialState, count: 50 },
         locale: {
           ...localeReducerInitialState,
           currentLocale:
@@ -72,9 +83,7 @@ export default function(parameters) {
         errorHandle(context, res);
         res.send(`<!doctype html>\n
         ${renderToString(
-          <Html
-            {...{ store, helmet, assets, content, preloaded }}
-          />,
+          <Html {...{ store, helmet, assets, content, preloaded }} />,
         )}`);
       });
     });

@@ -14,6 +14,7 @@
       "icons/*": ["./static/icons/*"],
       "static/*": ["./static/*"],
       "common/*": ["./common/*"],
+      "types/*": ["./types/*"],
       "utils/*": ["./utils/*"]
     }
   },
